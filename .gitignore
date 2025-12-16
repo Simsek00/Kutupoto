@@ -1,0 +1,11 @@
+# Visual Studio geçici dosyaları
+.vs/
+.vscode/
+
+# Derleme çıktıları (Bunları yüklememelisin)
+bin/
+obj/
+
+# Kullanıcıya özel ayarlar
+*.user
+*.suo

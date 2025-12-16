@@ -142,11 +142,13 @@ namespace Kutupoto
         {
             okuyucuId = 0;
 
-
+            // Cinsiyet seçimlerini sıfırla
             radiobtnErkek.Checked = false;
             radioBtnKadin.Checked = false;
 
-            foreach (var item in tableLayoutPanel1.Controls)
+            // ESKİSİ: foreach (var item in tableLayoutPanel1.Controls)
+            // YENİSİ: Artık "grpBilgiler" kutusunun içindekileri temizleyeceğiz:
+            foreach (var item in grpBilgiler.Controls)
             {
                 if (item is TextBox)
                 {
@@ -183,6 +185,11 @@ namespace Kutupoto
         private void btTemizle_Click(object sender, EventArgs e)
         {
             temizle();
+        }
+
+        private void btnCikis_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

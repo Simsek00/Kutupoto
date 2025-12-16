@@ -38,100 +38,164 @@
             lblSifre = new Label();
             btnKayit = new Button();
             label1 = new Label();
+            panel1 = new Panel();
+            btnCikis = new Button();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // lblAd
             // 
             lblAd.AutoSize = true;
-            lblAd.Location = new Point(51, 61);
+            lblAd.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            lblAd.ForeColor = Color.Silver;
+            lblAd.Location = new Point(50, 110);
             lblAd.Name = "lblAd";
-            lblAd.Size = new Size(25, 15);
+            lblAd.Size = new Size(26, 19);
             lblAd.TabIndex = 0;
-            lblAd.Text = "Ad:";
+            lblAd.Text = "Ad";
             // 
             // txtAd
             // 
-            txtAd.Location = new Point(133, 58);
+            txtAd.BackColor = Color.FromArgb(236, 240, 241);
+            txtAd.BorderStyle = BorderStyle.FixedSingle;
+            txtAd.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            txtAd.ForeColor = Color.FromArgb(44, 62, 80);
+            txtAd.Location = new Point(50, 132);
             txtAd.Name = "txtAd";
-            txtAd.Size = new Size(100, 23);
+            txtAd.Size = new Size(300, 27);
             txtAd.TabIndex = 1;
             // 
             // txtKullanici
             // 
-            txtKullanici.Location = new Point(133, 119);
+            txtKullanici.BackColor = Color.FromArgb(236, 240, 241);
+            txtKullanici.BorderStyle = BorderStyle.FixedSingle;
+            txtKullanici.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            txtKullanici.ForeColor = Color.FromArgb(44, 62, 80);
+            txtKullanici.Location = new Point(50, 262);
             txtKullanici.Name = "txtKullanici";
-            txtKullanici.Size = new Size(100, 23);
+            txtKullanici.Size = new Size(300, 27);
             txtKullanici.TabIndex = 3;
             // 
             // lblKullanici
             // 
             lblKullanici.AutoSize = true;
-            lblKullanici.Location = new Point(51, 122);
+            lblKullanici.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            lblKullanici.ForeColor = Color.Silver;
+            lblKullanici.Location = new Point(50, 240);
             lblKullanici.Name = "lblKullanici";
-            lblKullanici.Size = new Size(76, 15);
+            lblKullanici.Size = new Size(82, 19);
             lblKullanici.TabIndex = 2;
-            lblKullanici.Text = "Kullanıcı Adı:";
+            lblKullanici.Text = "Kullanıcı Adı";
             // 
             // txtSoyad
             // 
-            txtSoyad.Location = new Point(133, 90);
+            txtSoyad.BackColor = Color.FromArgb(236, 240, 241);
+            txtSoyad.BorderStyle = BorderStyle.FixedSingle;
+            txtSoyad.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            txtSoyad.ForeColor = Color.FromArgb(44, 62, 80);
+            txtSoyad.Location = new Point(50, 197);
             txtSoyad.Name = "txtSoyad";
-            txtSoyad.Size = new Size(100, 23);
-            txtSoyad.TabIndex = 5;
+            txtSoyad.Size = new Size(300, 27);
+            txtSoyad.TabIndex = 2;
             txtSoyad.TextChanged += textBox2_TextChanged;
             // 
             // lblSoyad
             // 
             lblSoyad.AutoSize = true;
-            lblSoyad.Location = new Point(51, 93);
+            lblSoyad.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            lblSoyad.ForeColor = Color.Silver;
+            lblSoyad.Location = new Point(50, 175);
             lblSoyad.Name = "lblSoyad";
-            lblSoyad.Size = new Size(42, 15);
+            lblSoyad.Size = new Size(46, 19);
             lblSoyad.TabIndex = 4;
-            lblSoyad.Text = "Soyad:";
+            lblSoyad.Text = "Soyad";
             // 
             // txtSifre
             // 
-            txtSifre.Location = new Point(133, 148);
+            txtSifre.BackColor = Color.FromArgb(236, 240, 241);
+            txtSifre.BorderStyle = BorderStyle.FixedSingle;
+            txtSifre.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            txtSifre.ForeColor = Color.FromArgb(44, 62, 80);
+            txtSifre.Location = new Point(50, 327);
             txtSifre.Name = "txtSifre";
-            txtSifre.Size = new Size(100, 23);
-            txtSifre.TabIndex = 7;
+            txtSifre.PasswordChar = '●';
+            txtSifre.Size = new Size(300, 27);
+            txtSifre.TabIndex = 4;
             // 
             // lblSifre
             // 
             lblSifre.AutoSize = true;
-            lblSifre.Location = new Point(51, 151);
+            lblSifre.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            lblSifre.ForeColor = Color.Silver;
+            lblSifre.Location = new Point(50, 305);
             lblSifre.Name = "lblSifre";
-            lblSifre.Size = new Size(33, 15);
+            lblSifre.Size = new Size(35, 19);
             lblSifre.TabIndex = 6;
-            lblSifre.Text = "Şifre:";
+            lblSifre.Text = "Şifre";
             // 
             // btnKayit
             // 
-            btnKayit.Location = new Point(133, 192);
+            btnKayit.BackColor = Color.FromArgb(230, 126, 34);
+            btnKayit.Cursor = Cursors.Hand;
+            btnKayit.FlatAppearance.BorderSize = 0;
+            btnKayit.FlatStyle = FlatStyle.Flat;
+            btnKayit.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnKayit.ForeColor = Color.White;
+            btnKayit.Location = new Point(50, 390);
             btnKayit.Name = "btnKayit";
-            btnKayit.Size = new Size(100, 40);
-            btnKayit.TabIndex = 8;
+            btnKayit.Size = new Size(300, 45);
+            btnKayit.TabIndex = 5;
             btnKayit.Text = "Kayıt Ol";
-            btnKayit.UseVisualStyleBackColor = true;
+            btnKayit.UseVisualStyleBackColor = false;
             btnKayit.Click += btnKayit_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(61, 9);
+            label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(100, 50);
             label1.Name = "label1";
-            label1.Size = new Size(159, 32);
+            label1.Size = new Size(160, 37);
             label1.TabIndex = 9;
-            label1.Text = "KAYIT EKRANI";
-            label1.Click += label1_Click;
+            label1.Text = "YENİ KAYIT";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(52, 73, 94);
+            panel1.Controls.Add(btnCikis);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(400, 35);
+            panel1.TabIndex = 10;
+            // 
+            // btnCikis
+            // 
+            btnCikis.Cursor = Cursors.Hand;
+            btnCikis.Dock = DockStyle.Right;
+            btnCikis.FlatAppearance.BorderSize = 0;
+            btnCikis.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 57, 43);
+            btnCikis.FlatStyle = FlatStyle.Flat;
+            btnCikis.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCikis.ForeColor = Color.White;
+            btnCikis.Location = new Point(360, 0);
+            btnCikis.Name = "btnCikis";
+            btnCikis.Size = new Size(40, 35);
+            btnCikis.TabIndex = 0;
+            btnCikis.Text = "X";
+            btnCikis.UseVisualStyleBackColor = true;
+            btnCikis.Click += btnCikis_Click;
             // 
             // Kayit
             // 
             AcceptButton = btnKayit;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(304, 277);
+            BackColor = Color.FromArgb(44, 62, 80);
+            ClientSize = new Size(400, 480);
+            Controls.Add(panel1);
             Controls.Add(label1);
             Controls.Add(btnKayit);
             Controls.Add(txtSifre);
@@ -142,24 +206,29 @@
             Controls.Add(lblKullanici);
             Controls.Add(txtAd);
             Controls.Add(lblAd);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "Kayit";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Kayit";
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
+
         }
 
         #endregion
 
-        private Label lblAd;
-        private TextBox txtAd;
-        private TextBox txtKullanici;
-        private Label lblKullanici;
-        private TextBox txtSoyad;
-        private Label lblSoyad;
-        private TextBox txtSifre;
-        private Label lblSifre;
-        private Button btnKayit;
-        private Label label1;
+        private System.Windows.Forms.Label lblAd;
+        private System.Windows.Forms.TextBox txtAd;
+        private System.Windows.Forms.TextBox txtKullanici;
+        private System.Windows.Forms.Label lblKullanici;
+        private System.Windows.Forms.TextBox txtSoyad;
+        private System.Windows.Forms.Label lblSoyad;
+        private System.Windows.Forms.TextBox txtSifre;
+        private System.Windows.Forms.Label lblSifre;
+        private System.Windows.Forms.Button btnKayit;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnCikis;
     }
 }

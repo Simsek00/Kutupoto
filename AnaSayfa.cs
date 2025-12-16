@@ -58,5 +58,10 @@ namespace Kutupoto
         {
             dataGridViewLoad();
         }
+
+        private void btnCikis_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

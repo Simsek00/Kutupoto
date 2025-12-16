@@ -47,5 +47,10 @@ namespace Kutupoto
         {
 
         }
+
+        private void btnCikis_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

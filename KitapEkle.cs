@@ -39,7 +39,9 @@ namespace Kutupoto
         {
             kitapId = 0;
 
-            foreach (var item in tableLayoutPanel.Controls)
+            // ESKİSİ: foreach (var item in tableLayoutPanel.Controls)
+            // YENİSİ: Textbox'lar artık "grpKitapBilgi" içinde olduğu için bunu yazıyoruz:
+            foreach (var item in grpKitapBilgi.Controls)
             {
                 if (item is TextBox)
                 {
@@ -170,6 +172,16 @@ namespace Kutupoto
         private void btnTemizle_Click(object sender, EventArgs e)
         {
             temizle();
+        }
+
+        private void btnCikis_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnCikis_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -48,5 +48,10 @@ namespace Kutupoto
                 MessageBox.Show("Kullanýcý Adý veya Þifre Hatalý Girilmiþtir.");
             }
         }
+
+        private void btnCikis_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

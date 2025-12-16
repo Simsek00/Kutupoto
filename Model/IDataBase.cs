@@ -10,7 +10,7 @@ namespace Kutupoto.Model
 {
 	internal class IDataBase
 	{
-		public static string connectionString = "Data Source =Mehmet\\SQLEXPRESS; Initial Catalog = KOSDb; Integrated Security = SSPI;";
+		public static string connectionString = "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=KOSDb; Integrated Security=True;";
 		public static DataTable DatatoDataTable(string query, List<SqlParameter> parameters)
 		{
 			try

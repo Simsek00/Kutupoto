@@ -38,7 +38,7 @@ namespace Kutupoto
             lblSinif.Text = "";
             lblOkulNo.Text = "";
             lblGecikmeBedeli.Text = "";
-            
+
 
             foreach (DataRow row in IDataBase.DatatoDataTable("select * from okuyucular where aktif = 1 and id = @id", new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId }).Rows)
             {
@@ -259,6 +259,11 @@ namespace Kutupoto
             {
                 dusumYap();
             }
+        }
+
+        private void btnCikis_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -28,318 +28,396 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Kiralama));
-            tableLayoutPanel1 = new TableLayoutPanel();
-            lblAdSoyad = new Label();
-            lblSinif = new Label();
-            lblOkulNo = new Label();
-            lblGecikmeBedeli = new Label();
-            groupBox1 = new GroupBox();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            panelHeader = new Panel();
+            labelHeader = new Label();
+            btnCikis = new Button();
+            grpOkuyucu = new GroupBox();
             dgOkuyucular = new DataGridView();
-            groupBox2 = new GroupBox();
+            panelOkuyucuDetay = new Panel();
+            lblGecikmeBedeli = new Label();
+            lblOkulNo = new Label();
+            lblSinif = new Label();
+            lblAdSoyad = new Label();
+            labelTitleOkuyucu = new Label();
+            grpKitap = new GroupBox();
             dgKitaplar = new DataGridView();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            lblKayitNo = new Label();
-            lblKitapAdi = new Label();
+            panelKitapDetay = new Panel();
             lblYazarAdi = new Label();
-            tableLayoutPanel3 = new TableLayoutPanel();
-            btnSureUzat = new Button();
+            lblKitapAdi = new Label();
+            lblKayitNo = new Label();
+            labelTitleKitap = new Label();
+            panelBottom = new Panel();
             btnDüsümYap = new Button();
+            btnSureUzat = new Button();
             btnEmanetEt = new Button();
-            tableLayoutPanel1.SuspendLayout();
-            groupBox1.SuspendLayout();
+            panelHeader.SuspendLayout();
+            grpOkuyucu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgOkuyucular).BeginInit();
-            groupBox2.SuspendLayout();
+            panelOkuyucuDetay.SuspendLayout();
+            grpKitap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgKitaplar).BeginInit();
-            tableLayoutPanel2.SuspendLayout();
-            tableLayoutPanel3.SuspendLayout();
+            panelKitapDetay.SuspendLayout();
+            panelBottom.SuspendLayout();
             SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // panelHeader
             // 
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(lblAdSoyad, 0, 0);
-            tableLayoutPanel1.Controls.Add(lblSinif, 0, 1);
-            tableLayoutPanel1.Controls.Add(lblOkulNo, 0, 2);
-            tableLayoutPanel1.Controls.Add(lblGecikmeBedeli, 0, 3);
-            tableLayoutPanel1.Location = new Point(6, 22);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.Size = new Size(244, 157);
-            tableLayoutPanel1.TabIndex = 0;
+            panelHeader.BackColor = Color.FromArgb(44, 62, 80);
+            panelHeader.Controls.Add(labelHeader);
+            panelHeader.Controls.Add(btnCikis);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(900, 50);
+            panelHeader.TabIndex = 0;
             // 
-            // lblAdSoyad
+            // labelHeader
             // 
-            lblAdSoyad.Anchor = AnchorStyles.Left;
-            lblAdSoyad.AutoSize = true;
-            lblAdSoyad.Location = new Point(3, 12);
-            lblAdSoyad.Name = "lblAdSoyad";
-            lblAdSoyad.Size = new Size(57, 15);
-            lblAdSoyad.TabIndex = 0;
-            lblAdSoyad.Text = "Ad Soyad";
+            labelHeader.AutoSize = true;
+            labelHeader.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            labelHeader.ForeColor = Color.White;
+            labelHeader.Location = new Point(20, 13);
+            labelHeader.Name = "labelHeader";
+            labelHeader.Size = new Size(207, 25);
+            labelHeader.TabIndex = 1;
+            labelHeader.Text = "KİRALAMA İŞLEMLERİ";
             // 
-            // lblSinif
+            // btnCikis
             // 
-            lblSinif.Anchor = AnchorStyles.Left;
-            lblSinif.AutoSize = true;
-            lblSinif.Location = new Point(3, 51);
-            lblSinif.Name = "lblSinif";
-            lblSinif.Size = new Size(30, 15);
-            lblSinif.TabIndex = 1;
-            lblSinif.Text = "Sınıf";
+            btnCikis.Dock = DockStyle.Right;
+            btnCikis.FlatAppearance.BorderSize = 0;
+            btnCikis.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 57, 43);
+            btnCikis.FlatStyle = FlatStyle.Flat;
+            btnCikis.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCikis.ForeColor = Color.White;
+            btnCikis.Location = new Point(850, 0);
+            btnCikis.Name = "btnCikis";
+            btnCikis.Size = new Size(50, 50);
+            btnCikis.TabIndex = 0;
+            btnCikis.Text = "X";
+            btnCikis.UseVisualStyleBackColor = true;
+            btnCikis.Click += btnCikis_Click;
             // 
-            // lblOkulNo
+            // grpOkuyucu
             // 
-            lblOkulNo.Anchor = AnchorStyles.Left;
-            lblOkulNo.AutoSize = true;
-            lblOkulNo.Location = new Point(3, 90);
-            lblOkulNo.Name = "lblOkulNo";
-            lblOkulNo.Size = new Size(51, 15);
-            lblOkulNo.TabIndex = 2;
-            lblOkulNo.Text = "Okul No";
-            // 
-            // lblGecikmeBedeli
-            // 
-            lblGecikmeBedeli.Anchor = AnchorStyles.Left;
-            lblGecikmeBedeli.AutoSize = true;
-            lblGecikmeBedeli.Location = new Point(3, 129);
-            lblGecikmeBedeli.Name = "lblGecikmeBedeli";
-            lblGecikmeBedeli.Size = new Size(88, 15);
-            lblGecikmeBedeli.TabIndex = 3;
-            lblGecikmeBedeli.Text = "Gecikme Bedeli";
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(dgOkuyucular);
-            groupBox1.Controls.Add(tableLayoutPanel1);
-            groupBox1.Location = new Point(12, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(810, 211);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Okuyucu Seç";
+            grpOkuyucu.Controls.Add(dgOkuyucular);
+            grpOkuyucu.Controls.Add(panelOkuyucuDetay);
+            grpOkuyucu.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            grpOkuyucu.ForeColor = Color.FromArgb(44, 62, 80);
+            grpOkuyucu.Location = new Point(20, 60);
+            grpOkuyucu.Name = "grpOkuyucu";
+            grpOkuyucu.Size = new Size(860, 220);
+            grpOkuyucu.TabIndex = 1;
+            grpOkuyucu.TabStop = false;
+            grpOkuyucu.Text = "1. Adım: Okuyucu Seçimi";
             // 
             // dgOkuyucular
             // 
             dgOkuyucular.AllowUserToAddRows = false;
-            dgOkuyucular.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgOkuyucular.Location = new Point(256, 22);
+            dgOkuyucular.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgOkuyucular.BackgroundColor = Color.White;
+            dgOkuyucular.BorderStyle = BorderStyle.None;
+            dgOkuyucular.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgOkuyucular.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgOkuyucular.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgOkuyucular.ColumnHeadersHeight = 35;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgOkuyucular.DefaultCellStyle = dataGridViewCellStyle2;
+            dgOkuyucular.Dock = DockStyle.Left;
+            dgOkuyucular.EnableHeadersVisualStyles = false;
+            dgOkuyucular.Location = new Point(3, 21);
             dgOkuyucular.MultiSelect = false;
             dgOkuyucular.Name = "dgOkuyucular";
             dgOkuyucular.ReadOnly = true;
-            dgOkuyucular.RowTemplate.Height = 25;
+            dgOkuyucular.RowHeadersVisible = false;
+            dgOkuyucular.RowTemplate.Height = 30;
             dgOkuyucular.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgOkuyucular.Size = new Size(548, 183);
-            dgOkuyucular.TabIndex = 1;
+            dgOkuyucular.Size = new Size(580, 196);
+            dgOkuyucular.TabIndex = 0;
             dgOkuyucular.CellClick += dgOkuyucular_CellClick;
             // 
-            // groupBox2
+            // panelOkuyucuDetay
             // 
-            groupBox2.Controls.Add(dgKitaplar);
-            groupBox2.Controls.Add(tableLayoutPanel2);
-            groupBox2.Location = new Point(12, 229);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(816, 226);
-            groupBox2.TabIndex = 2;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Kitap Seç";
+            panelOkuyucuDetay.BackColor = Color.FromArgb(236, 240, 241);
+            panelOkuyucuDetay.Controls.Add(lblGecikmeBedeli);
+            panelOkuyucuDetay.Controls.Add(lblOkulNo);
+            panelOkuyucuDetay.Controls.Add(lblSinif);
+            panelOkuyucuDetay.Controls.Add(lblAdSoyad);
+            panelOkuyucuDetay.Controls.Add(labelTitleOkuyucu);
+            panelOkuyucuDetay.Dock = DockStyle.Right;
+            panelOkuyucuDetay.Location = new Point(599, 21);
+            panelOkuyucuDetay.Name = "panelOkuyucuDetay";
+            panelOkuyucuDetay.Size = new Size(258, 196);
+            panelOkuyucuDetay.TabIndex = 1;
+            // 
+            // lblGecikmeBedeli
+            // 
+            lblGecikmeBedeli.BackColor = Color.Transparent;
+            lblGecikmeBedeli.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            lblGecikmeBedeli.ForeColor = Color.FromArgb(192, 57, 43);
+            lblGecikmeBedeli.Location = new Point(10, 150);
+            lblGecikmeBedeli.Name = "lblGecikmeBedeli";
+            lblGecikmeBedeli.Size = new Size(240, 25);
+            lblGecikmeBedeli.TabIndex = 4;
+            lblGecikmeBedeli.Text = "Durum: Temiz";
+            lblGecikmeBedeli.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblOkulNo
+            // 
+            lblOkulNo.Location = new Point(10, 110);
+            lblOkulNo.Name = "lblOkulNo";
+            lblOkulNo.Size = new Size(240, 20);
+            lblOkulNo.TabIndex = 3;
+            lblOkulNo.Text = "No: ---";
+            lblOkulNo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblSinif
+            // 
+            lblSinif.Location = new Point(10, 80);
+            lblSinif.Name = "lblSinif";
+            lblSinif.Size = new Size(240, 20);
+            lblSinif.TabIndex = 2;
+            lblSinif.Text = "Sınıf: ---";
+            lblSinif.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblAdSoyad
+            // 
+            lblAdSoyad.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblAdSoyad.Location = new Point(10, 45);
+            lblAdSoyad.Name = "lblAdSoyad";
+            lblAdSoyad.Size = new Size(240, 25);
+            lblAdSoyad.TabIndex = 1;
+            lblAdSoyad.Text = "---";
+            lblAdSoyad.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // labelTitleOkuyucu
+            // 
+            labelTitleOkuyucu.BackColor = Color.FromArgb(149, 165, 166);
+            labelTitleOkuyucu.Dock = DockStyle.Top;
+            labelTitleOkuyucu.ForeColor = Color.White;
+            labelTitleOkuyucu.Location = new Point(0, 0);
+            labelTitleOkuyucu.Name = "labelTitleOkuyucu";
+            labelTitleOkuyucu.Size = new Size(258, 30);
+            labelTitleOkuyucu.TabIndex = 0;
+            labelTitleOkuyucu.Text = "Seçili Okuyucu Bilgisi";
+            labelTitleOkuyucu.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // grpKitap
+            // 
+            grpKitap.Controls.Add(dgKitaplar);
+            grpKitap.Controls.Add(panelKitapDetay);
+            grpKitap.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            grpKitap.ForeColor = Color.FromArgb(44, 62, 80);
+            grpKitap.Location = new Point(20, 290);
+            grpKitap.Name = "grpKitap";
+            grpKitap.Size = new Size(860, 220);
+            grpKitap.TabIndex = 2;
+            grpKitap.TabStop = false;
+            grpKitap.Text = "2. Adım: Kitap Seçimi";
             // 
             // dgKitaplar
             // 
             dgKitaplar.AllowUserToAddRows = false;
-            dgKitaplar.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgKitaplar.Location = new Point(250, 22);
+            dgKitaplar.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgKitaplar.BackgroundColor = Color.White;
+            dgKitaplar.BorderStyle = BorderStyle.None;
+            dgKitaplar.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgKitaplar.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgKitaplar.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgKitaplar.ColumnHeadersHeight = 35;
+            dgKitaplar.DefaultCellStyle = dataGridViewCellStyle2;
+            dgKitaplar.Dock = DockStyle.Left;
+            dgKitaplar.EnableHeadersVisualStyles = false;
+            dgKitaplar.Location = new Point(3, 21);
             dgKitaplar.MultiSelect = false;
             dgKitaplar.Name = "dgKitaplar";
             dgKitaplar.ReadOnly = true;
-            dgKitaplar.RowTemplate.Height = 25;
+            dgKitaplar.RowHeadersVisible = false;
+            dgKitaplar.RowTemplate.Height = 30;
             dgKitaplar.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgKitaplar.Size = new Size(548, 189);
-            dgKitaplar.TabIndex = 1;
+            dgKitaplar.Size = new Size(580, 196);
+            dgKitaplar.TabIndex = 0;
             dgKitaplar.CellClick += dgKitaplar_CellClick;
             // 
-            // tableLayoutPanel2
+            // panelKitapDetay
             // 
-            tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Controls.Add(label1, 0, 0);
-            tableLayoutPanel2.Controls.Add(label2, 0, 1);
-            tableLayoutPanel2.Controls.Add(label3, 0, 2);
-            tableLayoutPanel2.Controls.Add(lblKayitNo, 1, 0);
-            tableLayoutPanel2.Controls.Add(lblKitapAdi, 1, 1);
-            tableLayoutPanel2.Controls.Add(lblYazarAdi, 1, 2);
-            tableLayoutPanel2.Location = new Point(6, 22);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 3;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel2.Size = new Size(238, 134);
-            tableLayoutPanel2.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.Anchor = AnchorStyles.Left;
-            label1.AutoSize = true;
-            label1.Location = new Point(3, 14);
-            label1.Name = "label1";
-            label1.Size = new Size(52, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Kayıt No";
-            // 
-            // label2
-            // 
-            label2.Anchor = AnchorStyles.Left;
-            label2.AutoSize = true;
-            label2.Location = new Point(3, 58);
-            label2.Name = "label2";
-            label2.Size = new Size(55, 15);
-            label2.TabIndex = 1;
-            label2.Text = "Kitap Adı";
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Left;
-            label3.AutoSize = true;
-            label3.Location = new Point(3, 103);
-            label3.Name = "label3";
-            label3.Size = new Size(55, 15);
-            label3.TabIndex = 2;
-            label3.Text = "Yazar Adı";
-            // 
-            // lblKayitNo
-            // 
-            lblKayitNo.Anchor = AnchorStyles.Left;
-            lblKayitNo.AutoSize = true;
-            lblKayitNo.Location = new Point(122, 14);
-            lblKayitNo.Name = "lblKayitNo";
-            lblKayitNo.Size = new Size(16, 15);
-            lblKayitNo.TabIndex = 3;
-            lblKayitNo.Text = "...";
-            // 
-            // lblKitapAdi
-            // 
-            lblKitapAdi.Anchor = AnchorStyles.Left;
-            lblKitapAdi.AutoSize = true;
-            lblKitapAdi.Location = new Point(122, 58);
-            lblKitapAdi.Name = "lblKitapAdi";
-            lblKitapAdi.Size = new Size(16, 15);
-            lblKitapAdi.TabIndex = 4;
-            lblKitapAdi.Text = "...";
+            panelKitapDetay.BackColor = Color.FromArgb(236, 240, 241);
+            panelKitapDetay.Controls.Add(lblYazarAdi);
+            panelKitapDetay.Controls.Add(lblKitapAdi);
+            panelKitapDetay.Controls.Add(lblKayitNo);
+            panelKitapDetay.Controls.Add(labelTitleKitap);
+            panelKitapDetay.Dock = DockStyle.Right;
+            panelKitapDetay.Location = new Point(599, 21);
+            panelKitapDetay.Name = "panelKitapDetay";
+            panelKitapDetay.Size = new Size(258, 196);
+            panelKitapDetay.TabIndex = 1;
             // 
             // lblYazarAdi
             // 
-            lblYazarAdi.Anchor = AnchorStyles.Left;
-            lblYazarAdi.AutoSize = true;
-            lblYazarAdi.Location = new Point(122, 103);
+            lblYazarAdi.Location = new Point(10, 140);
             lblYazarAdi.Name = "lblYazarAdi";
-            lblYazarAdi.Size = new Size(16, 15);
-            lblYazarAdi.TabIndex = 5;
-            lblYazarAdi.Text = "...";
+            lblYazarAdi.Size = new Size(240, 20);
+            lblYazarAdi.TabIndex = 3;
+            lblYazarAdi.Text = "Yazar: ---";
+            lblYazarAdi.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // tableLayoutPanel3
+            // lblKitapAdi
             // 
-            tableLayoutPanel3.ColumnCount = 3;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel3.Controls.Add(btnSureUzat, 1, 0);
-            tableLayoutPanel3.Controls.Add(btnDüsümYap, 2, 0);
-            tableLayoutPanel3.Controls.Add(btnEmanetEt, 0, 0);
-            tableLayoutPanel3.Location = new Point(12, 461);
-            tableLayoutPanel3.Name = "tableLayoutPanel3";
-            tableLayoutPanel3.RowCount = 1;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.Size = new Size(244, 40);
-            tableLayoutPanel3.TabIndex = 2;
+            lblKitapAdi.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            lblKitapAdi.Location = new Point(10, 85);
+            lblKitapAdi.Name = "lblKitapAdi";
+            lblKitapAdi.Size = new Size(240, 45);
+            lblKitapAdi.TabIndex = 2;
+            lblKitapAdi.Text = "---";
+            lblKitapAdi.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // btnSureUzat
+            // lblKayitNo
             // 
-            btnSureUzat.Location = new Point(84, 3);
-            btnSureUzat.Name = "btnSureUzat";
-            btnSureUzat.Size = new Size(75, 34);
-            btnSureUzat.TabIndex = 1;
-            btnSureUzat.Text = "Süre Uzat";
-            btnSureUzat.UseVisualStyleBackColor = true;
-            btnSureUzat.Click += btnSureUzat_Click;
+            lblKayitNo.Location = new Point(10, 50);
+            lblKayitNo.Name = "lblKayitNo";
+            lblKayitNo.Size = new Size(240, 20);
+            lblKayitNo.TabIndex = 1;
+            lblKayitNo.Text = "Kayıt No: ---";
+            lblKayitNo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // labelTitleKitap
+            // 
+            labelTitleKitap.BackColor = Color.FromArgb(149, 165, 166);
+            labelTitleKitap.Dock = DockStyle.Top;
+            labelTitleKitap.ForeColor = Color.White;
+            labelTitleKitap.Location = new Point(0, 0);
+            labelTitleKitap.Name = "labelTitleKitap";
+            labelTitleKitap.Size = new Size(258, 30);
+            labelTitleKitap.TabIndex = 0;
+            labelTitleKitap.Text = "Seçili Kitap Bilgisi";
+            labelTitleKitap.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panelBottom
+            // 
+            panelBottom.BackColor = Color.White;
+            panelBottom.Controls.Add(btnDüsümYap);
+            panelBottom.Controls.Add(btnSureUzat);
+            panelBottom.Controls.Add(btnEmanetEt);
+            panelBottom.Dock = DockStyle.Bottom;
+            panelBottom.Location = new Point(0, 530);
+            panelBottom.Name = "panelBottom";
+            panelBottom.Size = new Size(900, 70);
+            panelBottom.TabIndex = 3;
             // 
             // btnDüsümYap
             // 
-            btnDüsümYap.Location = new Point(165, 3);
+            btnDüsümYap.BackColor = Color.FromArgb(192, 57, 43);
+            btnDüsümYap.Cursor = Cursors.Hand;
+            btnDüsümYap.FlatAppearance.BorderSize = 0;
+            btnDüsümYap.FlatStyle = FlatStyle.Flat;
+            btnDüsümYap.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDüsümYap.ForeColor = Color.White;
+            btnDüsümYap.Location = new Point(677, 10);
             btnDüsümYap.Name = "btnDüsümYap";
-            btnDüsümYap.Size = new Size(76, 34);
+            btnDüsümYap.Size = new Size(200, 50);
             btnDüsümYap.TabIndex = 2;
-            btnDüsümYap.Text = "Düşüm Yap";
-            btnDüsümYap.UseVisualStyleBackColor = true;
+            btnDüsümYap.Text = "\U0001f6d1  DÜŞÜM YAP (İADE)";
+            btnDüsümYap.UseVisualStyleBackColor = false;
             btnDüsümYap.Click += btnDüsümYap_Click;
+            // 
+            // btnSureUzat
+            // 
+            btnSureUzat.BackColor = Color.FromArgb(230, 126, 34);
+            btnSureUzat.Cursor = Cursors.Hand;
+            btnSureUzat.FlatAppearance.BorderSize = 0;
+            btnSureUzat.FlatStyle = FlatStyle.Flat;
+            btnSureUzat.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            btnSureUzat.ForeColor = Color.White;
+            btnSureUzat.Location = new Point(350, 10);
+            btnSureUzat.Name = "btnSureUzat";
+            btnSureUzat.Size = new Size(200, 50);
+            btnSureUzat.TabIndex = 1;
+            btnSureUzat.Text = "⏳  SÜRE UZAT";
+            btnSureUzat.UseVisualStyleBackColor = false;
+            btnSureUzat.Click += btnSureUzat_Click;
             // 
             // btnEmanetEt
             // 
-            btnEmanetEt.Location = new Point(3, 3);
+            btnEmanetEt.BackColor = Color.FromArgb(39, 174, 96);
+            btnEmanetEt.Cursor = Cursors.Hand;
+            btnEmanetEt.FlatAppearance.BorderSize = 0;
+            btnEmanetEt.FlatStyle = FlatStyle.Flat;
+            btnEmanetEt.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            btnEmanetEt.ForeColor = Color.White;
+            btnEmanetEt.Location = new Point(23, 10);
             btnEmanetEt.Name = "btnEmanetEt";
-            btnEmanetEt.Size = new Size(75, 34);
+            btnEmanetEt.Size = new Size(200, 50);
             btnEmanetEt.TabIndex = 0;
-            btnEmanetEt.Text = "Emanet Et";
-            btnEmanetEt.UseVisualStyleBackColor = true;
+            btnEmanetEt.Text = "✅  EMANET ET";
+            btnEmanetEt.UseVisualStyleBackColor = false;
             btnEmanetEt.Click += btnEmanetEt_Click;
             // 
             // Kiralama
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.PaleGreen;
-            ClientSize = new Size(834, 506);
-            Controls.Add(tableLayoutPanel3);
-            Controls.Add(groupBox2);
-            Controls.Add(groupBox1);
-            Icon = (Icon)resources.GetObject("$this.Icon");
+            BackColor = Color.FromArgb(236, 240, 241);
+            ClientSize = new Size(900, 600);
+            Controls.Add(panelBottom);
+            Controls.Add(grpKitap);
+            Controls.Add(grpOkuyucu);
+            Controls.Add(panelHeader);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "Kiralama";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Kiralama İşlemleri";
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
-            groupBox1.ResumeLayout(false);
+            Text = "Kiralama";
+            Load += Kiralama_Load;
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            grpOkuyucu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgOkuyucular).EndInit();
-            groupBox2.ResumeLayout(false);
+            panelOkuyucuDetay.ResumeLayout(false);
+            grpKitap.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgKitaplar).EndInit();
-            tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel2.PerformLayout();
-            tableLayoutPanel3.ResumeLayout(false);
+            panelKitapDetay.ResumeLayout(false);
+            panelBottom.ResumeLayout(false);
             ResumeLayout(false);
+
         }
 
         #endregion
 
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label lblAdSoyad;
-        private Label lblSinif;
-        private Label lblOkulNo;
-        private Label lblGecikmeBedeli;
-        private GroupBox groupBox1;
-        private DataGridView dgOkuyucular;
-        private GroupBox groupBox2;
-        private DataGridView dgKitaplar;
-        private TableLayoutPanel tableLayoutPanel2;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label lblKayitNo;
-        private Label lblKitapAdi;
-        private Label lblYazarAdi;
-        private TableLayoutPanel tableLayoutPanel3;
-        private Button btnEmanetEt;
-        private Button btnSureUzat;
-        private Button btnDüsümYap;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelHeader;
+        private System.Windows.Forms.Button btnCikis;
+        private System.Windows.Forms.GroupBox grpOkuyucu;
+        private System.Windows.Forms.DataGridView dgOkuyucular;
+        private System.Windows.Forms.Panel panelOkuyucuDetay;
+        private System.Windows.Forms.Label labelTitleOkuyucu;
+        private System.Windows.Forms.Label lblOkulNo;
+        private System.Windows.Forms.Label lblSinif;
+        private System.Windows.Forms.Label lblAdSoyad;
+        private System.Windows.Forms.Label lblGecikmeBedeli;
+        private System.Windows.Forms.GroupBox grpKitap;
+        private System.Windows.Forms.DataGridView dgKitaplar;
+        private System.Windows.Forms.Panel panelKitapDetay;
+        private System.Windows.Forms.Label labelTitleKitap;
+        private System.Windows.Forms.Label lblYazarAdi;
+        private System.Windows.Forms.Label lblKitapAdi;
+        private System.Windows.Forms.Label lblKayitNo;
+        private System.Windows.Forms.Panel panelBottom;
+        private System.Windows.Forms.Button btnEmanetEt;
+        private System.Windows.Forms.Button btnSureUzat;
+        private System.Windows.Forms.Button btnDüsümYap;
     }
 }
