@@ -58,6 +58,11 @@ namespace Kutupoto
                 AnaSayfa anaSayfa = new AnaSayfa();
                 this.Hide();
                 anaSayfa.ShowDialog();
+
+                txtKullanici.Text = "";  // Kullanýcý adýný sil
+                txtSifre.Text = "";      // Þifreyi sil
+                txtKullanici.Focus();
+
                 this.Show(); // Anasayfa kapanýnca tekrar giriþi göster
             }
             else

@@ -166,7 +166,7 @@ namespace Kutupoto
 
         private void btKapat_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnCikis_Click(object sender, EventArgs e)
