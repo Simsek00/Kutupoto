@@ -42,6 +42,7 @@ namespace Kutupoto
             parameters.Add(new SqlParameter("@cepTel", SqlDbType.VarChar) { Value = maskedCepTel.Text });
             parameters.Add(new SqlParameter("@adres", SqlDbType.VarChar) { Value = txtAdres.Text });
 
+            //okuyucular tablosuna yeni satir ekleme
             object value = IDataBase.executeScalar("insert into okuyucular (adi, soyadi, cinsiyeti, sinifi, okulNo, cepTel, adres) values (@adi, @soyadi, @cinsiyeti, @sinifi, @okulNo, @cepTel, @adres) select @@IDENTITY", parameters);
             okuyucuId = Convert.ToInt32(value);
             okuyucularLoad();
@@ -69,6 +70,7 @@ namespace Kutupoto
             parameters.Add(new SqlParameter("@adres", SqlDbType.VarChar) { Value = txtAdres.Text });
             parameters.Add(new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId });
 
+            //
             IDataBase.executeNonQuery("update okuyucular set adi = @adi, soyadi = @soyadi, cinsiyeti = @cinsiyeti, sinifi = @sinifi, okulNo = @okulNo, cepTel = @cepTel, adres = @adres where id = @id", parameters);
 
 
