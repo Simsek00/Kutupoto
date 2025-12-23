@@ -33,16 +33,13 @@ namespace Kutupoto
 
         void getOkuyucuProfil()
         {
-
             lblAdSoyad.Text = "";
             lblSinif.Text = "";
             lblOkulNo.Text = "";
             lblGecikmeBedeli.Text = "";
 
-
             foreach (DataRow row in IDataBase.DatatoDataTable("select * from okuyucular where aktif = 1 and id = @id", new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId }).Rows)
             {
-
                 lblAdSoyad.Text = row["adi"].ToString() + " " + row["soyadi"].ToString();
                 lblSinif.Text = row["sinifi"].ToString();
                 lblOkulNo.Text = row["okulNo"].ToString();
@@ -58,9 +55,12 @@ namespace Kutupoto
                     lblGecikmeBedeli.Text = "Uygun";
                     lblGecikmeBedeli.BackColor = Color.Transparent;
                 }
-                kitapId = getEmanetId();
-                getKitapProfil();
 
+                // --- DEĞİŞEN KISIM BURASI ---
+                kitapId = getEmanetKitapId(); // Artık yeni metodu kullanıyoruz
+                                              // ----------------------------
+
+                getKitapProfil();
             }
         }
 
@@ -125,19 +125,24 @@ namespace Kutupoto
                 return;
             }
 
-            if (getEmanetId() == 0)
+            int currentEmanetId = getEmanetId(); // Artık doğru ID (Primary Key) geliyor.
+
+            if (currentEmanetId == 0)
             {
-                MessageBox.Show("Seçili okuyucunun emaneti yok!");
+                MessageBox.Show("HATA: Aktif bir emanet kaydı bulunamadı!");
                 return;
             }
 
-
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@kitapId", SqlDbType.Int) { Value = kitapId });
-            parameters.Add(new SqlParameter("@emanetVerilisTarihi", SqlDbType.Date) { Value = DateTime.Now });
-            parameters.Add(new SqlParameter("@emanetGeriAlmaTarihi", SqlDbType.Date) { Value = DateTime.Now.AddDays(30) });
+            parameters.Add(new SqlParameter("@emanetId", SqlDbType.Int) { Value = currentEmanetId });
 
-            IDataBase.executeNonQuery("update emanetler set emanetVerilisTarihi = @emanetVerilisTarihi, emanetGeriAlmaTarihi = @emanetGeriAlmaTarihi where kitapId = @kitapId", parameters);
+            // SQL Tarafında DATEADD ile mevcut tarihin üzerine 30 gün ekliyoruz.
+            // WHERE id = @emanetId diyerek doğru satırı güncelliyoruz.
+            string sorgu = "UPDATE emanetler SET emanetGeriAlmaTarihi = DATEADD(day, 30, emanetGeriAlmaTarihi) WHERE id = @emanetId";
+
+            IDataBase.executeNonQuery(sorgu, parameters);
+
+            MessageBox.Show("Süre mevcut tarihin üzerine 30 gün daha eklendi.");
 
             getOkuyucuProfil();
             kitaplarLoad();
@@ -170,6 +175,17 @@ namespace Kutupoto
         }
         int getEmanetId()
         {
+            // DİKKAT: Burayı row["kitapId"] yerine row["id"] yaptık.
+            // Artık bu metod işlemin gerçek kimlik numarasını döndürüyor.
+            foreach (DataRow row in IDataBase.DatatoDataTable("select * from emanetler where okuyucuId = @id and durum = 0 and aktif = 1", new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId }).Rows)
+            {
+                return Convert.ToInt32(row["id"]);
+            }
+            return 0;
+        }
+        int getEmanetKitapId()
+        {
+            // Bu metod sadece okuyucunun elindeki kitabın ID'sini bulmak için
             foreach (DataRow row in IDataBase.DatatoDataTable("select * from emanetler where okuyucuId = @id and durum = 0 and aktif = 1", new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId }).Rows)
             {
                 return Convert.ToInt32(row["kitapId"]);
