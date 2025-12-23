@@ -51,17 +51,32 @@ namespace Kutupoto
         }
 
         // 2. MEVCUT KİTAPLARI YÜKLE (VE FİLTREYİ HAZIRLA)
-        void kitapLoad()
+void kitapLoad()
         {
             // Veriyi çekip global değişkenimize (dtKitaplar) atıyoruz
+            // NOT: Eğer artık 'aktif' mantığını hiç kullanmayacaksan sorgudan "and aktif = 1" kısmını da silebilirsin.
+            // Ama şimdilik sadece ekranda gizlemek için sorgu kalsın.
             dtKitaplar = IDataBase.DatatoDataTable("select * from kitaplar where aktif = 1 and durum = 1");
             dgMevcutKitaplar.DataSource = dtKitaplar;
 
+            // --- GİZLEME İŞLEMLERİ ---
+            
+            // ID'yi Gizle
             if (dgMevcutKitaplar.Columns.Contains("id"))
                 dgMevcutKitaplar.Columns["id"].Visible = false;
 
+            // AKTİF Kolonunu Gizle (YENİ EKLENEN)
+            if (dgMevcutKitaplar.Columns.Contains("aktif"))
+                dgMevcutKitaplar.Columns["aktif"].Visible = false;
+            
+            // DURUM Kolonunu da Gizlemek İstersen (İsteğe Bağlı)
+            // Çünkü zaten sadece durum=1 (Rafta) olanları çekiyorsun, ekranda sürekli "1" yazmasına gerek yok.
+            if (dgMevcutKitaplar.Columns.Contains("durum"))
+                dgMevcutKitaplar.Columns["durum"].Visible = false;
+
+            // -------------------------
+
             // Tür Filtresini (ComboBox) Doldurma İşlemi
-            // Eğer ComboBox boşsa doldur (Sürekli tekrar doldurmasın)
             if (cmbTurFiltre.Items.Count <= 1)
             {
                 cmbTurFiltre.Items.Clear();
@@ -70,13 +85,12 @@ namespace Kutupoto
                 foreach (DataRow row in dtKitaplar.Rows)
                 {
                     string tur = row["tur"].ToString();
-                    // Boş değilse ve daha önce eklenmemişse ekle
                     if (!string.IsNullOrEmpty(tur) && !cmbTurFiltre.Items.Contains(tur))
                     {
                         cmbTurFiltre.Items.Add(tur);
                     }
                 }
-                cmbTurFiltre.SelectedIndex = 0; // Varsayılan "Tümü"
+                cmbTurFiltre.SelectedIndex = 0; 
             }
         }
 
