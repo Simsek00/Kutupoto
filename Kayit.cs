@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq; // Bu kütüphane harf kontrolleri için gerekli
+using System.Linq; // This library is required for LINQ character checks (Any, All)
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,11 +20,12 @@ namespace Kutupoto
             InitializeComponent();
         }
 
-        // Şifre Hashleme Fonksiyonu (Aynen korundu)
+        // Helper function to hash the password using SHA-256 algorithm
         public static string sha256_hash(string sifre)
         {
             using (SHA256 hash = SHA256Managed.Create())
             {
+                // Compute hash and convert byte array to hex string
                 return string.Concat(hash.ComputeHash(Encoding.UTF8.GetBytes(sifre)).Select(l => l.ToString("X2")));
             }
         }
@@ -36,7 +37,7 @@ namespace Kutupoto
 
         private void btnKayit_Click(object sender, EventArgs e)
         {
-            // 1. Boş alan kontrolü
+            // 1. Validate that no fields are left empty
             if (string.IsNullOrEmpty(txtAd.Text) || string.IsNullOrEmpty(txtSoyad.Text) || string.IsNullOrEmpty(txtKullanici.Text) || string.IsNullOrEmpty(txtSifre.Text))
             {
                 MessageBox.Show("Lütfen tüm alanları doldurunuz.", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -45,62 +46,64 @@ namespace Kutupoto
 
             string girilenSifre = txtSifre.Text;
 
-            // --- YENİ EKLENEN ŞİFRE KONTROLLERİ ---
+            // --- PASSWORD VALIDATION RULES ---
 
-            // Kural 1: En az 6 karakter uzunluğunda olmalı
+            // Rule 1: Must be at least 6 characters long
             if (girilenSifre.Length < 6)
             {
                 MessageBox.Show("Şifre en az 6 karakter uzunluğunda olmalıdır.", "Şifre Hatası", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Kural 2: En az 1 tane BÜYÜK harf içermeli
+            // Rule 2: Must contain at least one UPPERCASE letter
             if (!girilenSifre.Any(char.IsUpper))
             {
                 MessageBox.Show("Şifre en az 1 büyük harf içermelidir.", "Şifre Hatası", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Kural 3: En az 1 tane küçük harf içermeli
+            // Rule 3: Must contain at least one lowercase letter
             if (!girilenSifre.Any(char.IsLower))
             {
                 MessageBox.Show("Şifre en az 1 küçük harf içermelidir.", "Şifre Hatası", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Kural 4: Özel karakter İÇERMEMELİ (Sadece harf ve rakam olabilir)
-            // char.IsLetterOrDigit fonksiyonu sadece harf ve rakama izin verir.
-            // Eğer şifrede harf veya rakam dışında bir şey varsa (All fonksiyonu false döner) hata veririz.
+            // Rule 4: Must NOT contain special characters (Only letters and digits allowed)
+            // char.IsLetterOrDigit checks if the character is a letter or a decimal digit.
+            // If the password contains anything else (All returns false), trigger error.
             if (!girilenSifre.All(char.IsLetterOrDigit))
             {
                 MessageBox.Show("Şifre özel karakter (nokta, virgül, @, vb.) içeremez. Sadece harf ve rakam kullanınız.", "Şifre Hatası", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // --- KONTROLLER BİTTİ ---
+            // --- VALIDATION COMPLETE ---
 
 
-            // 2. Şifreyi Hashle (Güvenli hale getir)
+            // 2. Hash the password for security
             string guvenliSifre = sha256_hash(girilenSifre);
 
-            // 3. Veritabanına kaydet
+            // 3. Save to database
             try
             {
                 List<SqlParameter> parameters = new List<SqlParameter>();
                 parameters.Add(new SqlParameter("@adi", SqlDbType.VarChar) { Value = txtAd.Text });
                 parameters.Add(new SqlParameter("@soyadi", SqlDbType.VarChar) { Value = txtSoyad.Text });
-                parameters.Add(new SqlParameter("@KullaniciAdi", SqlDbType.VarChar) { Value = txtKullanici.Text });
-                
-                // Hashlenmiş şifre uzun olduğu için veritabanında Sifre kolonunu VARCHAR(64) veya üzeri yapman gerekir.
+                parameters.Add(new SqlParameter("@KullaniciAdi", SqlDbType.VarChar) { Value = txtKullanici.Text });  
                 parameters.Add(new SqlParameter("@Sifre", SqlDbType.VarChar) { Value = guvenliSifre });
 
+                // Execute the insert query
                 IDataBase.executeNonQuery("insert into kullanicilar (adi, soyadi, KullaniciAdi, Sifre) values (@adi, @soyadi, @KullaniciAdi, @Sifre)", parameters);
 
                 MessageBox.Show("Başarıyla Kayıt Oldunuz. Giriş ekranına yönlendiriliyorsunuz.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close(); // Kayıttan sonra pencereyi kapat
+                
+                // Close the registration form after successful registration
+                this.Close(); 
             }
             catch (Exception ex)
             {
+                // Handle database errors
                 MessageBox.Show("Kayıt sırasında bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -112,6 +115,7 @@ namespace Kutupoto
 
         private void btnCikis_Click(object sender, EventArgs e)
         {
+            // Close the current form
             this.Close();
         }
     }
