@@ -40,6 +40,7 @@
             label1 = new Label();
             panel1 = new Panel();
             btnCikis = new Button();
+            lblKurallar = new Label(); // YENİ: Kurallar etiketi oluşturuldu
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -133,6 +134,17 @@
             lblSifre.TabIndex = 6;
             lblSifre.Text = "Şifre";
             // 
+            // lblKurallar (YENİ EKLENEN KISIM)
+            // 
+            lblKurallar.AutoSize = true;
+            lblKurallar.Font = new Font("Segoe UI", 8.5F, FontStyle.Italic, GraphicsUnit.Point);
+            lblKurallar.ForeColor = Color.FromArgb(149, 165, 166); // Biraz daha soluk gri
+            lblKurallar.Location = new Point(50, 358); // Şifre kutusunun hemen altı
+            lblKurallar.Name = "lblKurallar";
+            lblKurallar.Size = new Size(250, 30);
+            lblKurallar.TabIndex = 7;
+            lblKurallar.Text = "* En az 6 karakter (1 Büyük, 1 Küçük harf)\n* Özel karakter kullanmayınız";
+            // 
             // btnKayit
             // 
             btnKayit.BackColor = Color.FromArgb(230, 126, 34);
@@ -141,7 +153,8 @@
             btnKayit.FlatStyle = FlatStyle.Flat;
             btnKayit.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
             btnKayit.ForeColor = Color.White;
-            btnKayit.Location = new Point(50, 390);
+            // DEĞİŞİKLİK: Butonu biraz aşağı kaydırdık (Y: 390 -> 405) ki yazılar sığsın
+            btnKayit.Location = new Point(50, 405); 
             btnKayit.Name = "btnKayit";
             btnKayit.Size = new Size(300, 45);
             btnKayit.TabIndex = 5;
@@ -194,10 +207,12 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(44, 62, 80);
-            ClientSize = new Size(400, 480);
+            // DEĞİŞİKLİK: Formu biraz uzattık (480 -> 500) ki alttan sıkışmasın
+            ClientSize = new Size(400, 500); 
             Controls.Add(panel1);
             Controls.Add(label1);
             Controls.Add(btnKayit);
+            Controls.Add(lblKurallar); // YENİ: Etiketi forma ekledik
             Controls.Add(txtSifre);
             Controls.Add(lblSifre);
             Controls.Add(txtSoyad);
@@ -230,5 +245,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCikis;
+        private System.Windows.Forms.Label lblKurallar; // YENİ TANIMLAMA
     }
 }
