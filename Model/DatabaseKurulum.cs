@@ -81,7 +81,7 @@ namespace Kutupoto.Model
                         }
                     }
 
-                    MessageBox.Show("Veritabanı ve Tablolar Başarıyla Oluşturuldu!\nVarsayılan Kullanıcı: admin / 1234", "Kurulum Tamamlandı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Veritabanı ve Tablolar Başarıyla Oluşturuldu!\n", "Kurulum Tamamlandı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
