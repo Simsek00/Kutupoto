@@ -12,7 +12,10 @@ namespace Kutupoto.Model
     // It prevents code duplication by handling connections and commands in one place.
     internal class IDataBase
     {
-        public static string connectionString = "Server=DESKTOP-NP5RE6D\\SQLEXPRESS; Database=KOSDb; Integrated Security=True; TrustServerCertificate=True;";
+        // IMPORTANT CHANGE FOR PORTABILITY:
+        // Changed "Server=DESKTOP-..." to "Server=.\\SQLEXPRESS".
+        // The "." (dot) represents "Localhost", meaning it will look for SQL Express on whichever computer runs this app.
+        public static string connectionString = "Server=.\\SQLEXPRESS; Database=KOSDb; Integrated Security=True; TrustServerCertificate=True;";
 
         // METHOD 1: DatatoDataTable
         // Purpose: Executes a SELECT query and returns the results as a DataTable.
@@ -21,12 +24,12 @@ namespace Kutupoto.Model
         {
             try
             {
-                // Create a new connection
+                // Create a new connection using the generic connection string
                 SqlConnection con = new SqlConnection(connectionString);
-                
+
                 // Prepare the command with the query and connection
                 SqlCommand cmd = new SqlCommand(query, con);
-                
+
                 // Add parameters to the command to prevent SQL Injection
                 if (parameters != null)
                 {
@@ -36,7 +39,7 @@ namespace Kutupoto.Model
                 // Use SqlDataAdapter to fetch data (Disconnected Architecture)
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
-                
+
                 // Fill the DataTable with the result set from the database
                 da.Fill(dt);
 
@@ -68,7 +71,7 @@ namespace Kutupoto.Model
         {
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand(query, con);
-            
+
             // We must open the connection manually for ExecuteNonQuery
             con.Open();
             try
@@ -77,18 +80,18 @@ namespace Kutupoto.Model
                 {
                     cmd.Parameters.AddRange(parameters.ToArray());
                 }
-                
-                // Execute the command (returns the number of affected rows, though ignored here)
+
+                // Execute the command (returns the number of affected rows)
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
-            finally 
-            { 
-                // ensures the connection closes even if an error occurs.
-                con.Close(); 
+            finally
+            {
+                // CRITICAL: Ensure the connection closes even if an error occurs to prevent leaks.
+                con.Close();
             }
         }
 
@@ -106,7 +109,7 @@ namespace Kutupoto.Model
             object value = null;
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand(query, con);
-            
+
             con.Open();
             try
             {
@@ -114,7 +117,7 @@ namespace Kutupoto.Model
                 {
                     cmd.Parameters.AddRange(parameters.ToArray());
                 }
-                
+
                 // ExecuteScalar returns the first column of the first row
                 value = cmd.ExecuteScalar();
             }
@@ -122,11 +125,11 @@ namespace Kutupoto.Model
             {
                 throw ex;
             }
-            finally 
-            { 
-                con.Close(); 
+            finally
+            {
+                con.Close();
             }
-            
+
             // Return the single value (as an object, needs casting later)
             return value;
         }

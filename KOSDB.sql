@@ -1,118 +1,78 @@
 USE [master]
 GO
 
-/****** Object:  Database [KOSDb]    Script Date: 2.06.2023 10:18:50 ******/
-CREATE DATABASE [KOSDb]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'KOSDb', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\DATA\KOSDb.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'KOSDb_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\DATA\KOSDb_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+IF NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'KOSDb')
+BEGIN
+    CREATE DATABASE [KOSDb]
+END
 GO
 
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [KOSDb].[dbo].[sp_fulltext_database] @action = 'enable'
-end
+USE [KOSDb]
 GO
 
-ALTER DATABASE [KOSDb] SET ANSI_NULL_DEFAULT OFF 
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[kullanicilar]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[kullanicilar](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [adi] [varchar](20) NULL,          
+        [soyadi] [varchar](20) NULL,        
+        [KullaniciAdi] [varchar](20) NULL,  
+        [Sifre] [nvarchar](100) NULL,      
+        PRIMARY KEY CLUSTERED ([id] ASC)
+    )
+
+END
 GO
 
-ALTER DATABASE [KOSDb] SET ANSI_NULLS OFF 
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[kitaplar]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[kitaplar](
+        [id] [int] IDENTITY(1,1) NOT NULL,  
+        [kayitNo] [int] NULL,               
+        [kitapAdi] [varchar](50) NULL,      
+        [yazarAdi] [varchar](50) NULL,      
+        [sayfaSayisi] [varchar](20) NULL,   
+        [tur] [varchar](20) NULL,           
+        [yayinevi] [varchar](50) NULL,     
+        [basimYili] [varchar](20) NULL,     
+        [dolapNo] [varchar](20) NULL,       
+        [rafNo] [varchar](20) NULL,         
+        [aktif] [int] DEFAULT 1,            
+        [durum] [int] DEFAULT 1,            
+        PRIMARY KEY CLUSTERED ([id] ASC)
+    )
+END
 GO
 
-ALTER DATABASE [KOSDb] SET ANSI_PADDING OFF 
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[okuyucular]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[okuyucular](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [adi] [varchar](30) NULL,           
+        [soyadi] [varchar](30) NULL,        
+        [cinsiyeti] [varchar](10) NULL,     
+        [sinifi] [varchar](10) NULL,       
+        [okulNo] [varchar](30) NULL,        
+        [cepTel] [varchar](30) NULL,        
+        [adres] [varchar](250) NULL,        
+        [aktif] [int] DEFAULT 1,           
+        PRIMARY KEY CLUSTERED ([id] ASC)
+    )
+END
 GO
 
-ALTER DATABASE [KOSDb] SET ANSI_WARNINGS OFF 
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[emanetler]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[emanetler](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [kitapId] [int] NULL,              
+        [okuyucuId] [int] NULL,            
+        [emanetVerilisTarihi] [date] NULL, 
+        [emanetGeriAlmaTarihi] [date] NULL,
+        [emanetIslemTarihi] [date] NULL,    
+        [durum] [int] DEFAULT 0,            
+        [aktif] [int] DEFAULT 1,            
+        PRIMARY KEY CLUSTERED ([id] ASC)
+    )
+END
 GO
-
-ALTER DATABASE [KOSDb] SET ARITHABORT OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET AUTO_CLOSE OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET AUTO_SHRINK OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET AUTO_UPDATE_STATISTICS ON 
-GO
-
-ALTER DATABASE [KOSDb] SET CURSOR_CLOSE_ON_COMMIT OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET CURSOR_DEFAULT  GLOBAL 
-GO
-
-ALTER DATABASE [KOSDb] SET CONCAT_NULL_YIELDS_NULL OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET NUMERIC_ROUNDABORT OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET QUOTED_IDENTIFIER OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET RECURSIVE_TRIGGERS OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET  DISABLE_BROKER 
-GO
-
-ALTER DATABASE [KOSDb] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET DATE_CORRELATION_OPTIMIZATION OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET TRUSTWORTHY OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET PARAMETERIZATION SIMPLE 
-GO
-
-ALTER DATABASE [KOSDb] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET HONOR_BROKER_PRIORITY OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET RECOVERY SIMPLE 
-GO
-
-ALTER DATABASE [KOSDb] SET  MULTI_USER 
-GO
-
-ALTER DATABASE [KOSDb] SET PAGE_VERIFY CHECKSUM  
-GO
-
-ALTER DATABASE [KOSDb] SET DB_CHAINING OFF 
-GO
-
-ALTER DATABASE [KOSDb] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-GO
-
-ALTER DATABASE [KOSDb] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-GO
-
-ALTER DATABASE [KOSDb] SET DELAYED_DURABILITY = DISABLED 
-GO
-
-ALTER DATABASE [KOSDb] SET ACCELERATED_DATABASE_RECOVERY = OFF  
-GO
-
-ALTER DATABASE [KOSDb] SET QUERY_STORE = ON
-GO
-
-ALTER DATABASE [KOSDb] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200)
-GO
-
-ALTER DATABASE [KOSDb] SET  READ_WRITE 
-GO
-
