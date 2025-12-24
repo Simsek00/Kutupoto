@@ -23,18 +23,12 @@ namespace Kutupoto
 
         private void KitapEkle_Load(object sender, EventArgs e)
         {
-            // 1. GÖRÜNÜM AYARLARI (Tablo Taşıma Sorunu Çözümü)
-            // ---------------------------------------------------------
-            // Panelleri en öne getir ki tablo onların altında kalsın ama kenarlara yaslansın.
             panelHeader.Dock = DockStyle.Top;
             panelLeft.Dock = DockStyle.Left;
             dg.Dock = DockStyle.Fill;
 
-            // Sütunları ekrana sığdır (Taşmayı engeller)
             dg.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            // ---------------------------------------------------------
 
-            // 2. KUTU KİLİTLEME
             txtKayitNo.ReadOnly = true;
             txtKayitNo.BackColor = Color.WhiteSmoke;
             txtKayitNo.ForeColor = Color.Red;
