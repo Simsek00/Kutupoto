@@ -87,7 +87,6 @@ namespace Kutupoto.Model
             }
             finally 
             { 
-                // CRITICAL: Always close the connection in the 'finally' block
                 // ensures the connection closes even if an error occurs.
                 con.Close(); 
             }
