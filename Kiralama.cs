@@ -56,9 +56,7 @@ namespace Kutupoto
                     lblGecikmeBedeli.BackColor = Color.Transparent;
                 }
 
-                // --- DEĞİŞEN KISIM BURASI ---
-                kitapId = getEmanetKitapId(); // Artık yeni metodu kullanıyoruz
-                                              // ----------------------------
+                kitapId = getEmanetKitapId();
 
                 getKitapProfil();
             }
@@ -125,7 +123,7 @@ namespace Kutupoto
                 return;
             }
 
-            int currentEmanetId = getEmanetId(); // Artık doğru ID (Primary Key) geliyor.
+            int currentEmanetId = getEmanetId();
 
             if (currentEmanetId == 0)
             {
@@ -137,7 +135,6 @@ namespace Kutupoto
             parameters.Add(new SqlParameter("@emanetId", SqlDbType.Int) { Value = currentEmanetId });
 
             // SQL Tarafında DATEADD ile mevcut tarihin üzerine 30 gün ekliyoruz.
-            // WHERE id = @emanetId diyerek doğru satırı güncelliyoruz.
             string sorgu = "UPDATE emanetler SET emanetGeriAlmaTarihi = DATEADD(day, 30, emanetGeriAlmaTarihi) WHERE id = @emanetId";
 
             IDataBase.executeNonQuery(sorgu, parameters);

@@ -51,30 +51,22 @@ namespace Kutupoto
         }
 
         // 2. MEVCUT KİTAPLARI YÜKLE (VE FİLTREYİ HAZIRLA)
-void kitapLoad()
+        void kitapLoad()
         {
-            // Veriyi çekip global değişkenimize (dtKitaplar) atıyoruz
-            // NOT: Eğer artık 'aktif' mantığını hiç kullanmayacaksan sorgudan "and aktif = 1" kısmını da silebilirsin.
-            // Ama şimdilik sadece ekranda gizlemek için sorgu kalsın.
             dtKitaplar = IDataBase.DatatoDataTable("select * from kitaplar where aktif = 1 and durum = 1");
             dgMevcutKitaplar.DataSource = dtKitaplar;
-
-            // --- GİZLEME İŞLEMLERİ ---
             
             // ID'yi Gizle
             if (dgMevcutKitaplar.Columns.Contains("id"))
                 dgMevcutKitaplar.Columns["id"].Visible = false;
 
-            // AKTİF Kolonunu Gizle (YENİ EKLENEN)
+            // AKTİF Kolonunu Gizle
             if (dgMevcutKitaplar.Columns.Contains("aktif"))
                 dgMevcutKitaplar.Columns["aktif"].Visible = false;
             
-            // DURUM Kolonunu da Gizlemek İstersen (İsteğe Bağlı)
             // Çünkü zaten sadece durum=1 (Rafta) olanları çekiyorsun, ekranda sürekli "1" yazmasına gerek yok.
             if (dgMevcutKitaplar.Columns.Contains("durum"))
                 dgMevcutKitaplar.Columns["durum"].Visible = false;
-
-            // -------------------------
 
             // Tür Filtresini (ComboBox) Doldurma İşlemi
             if (cmbTurFiltre.Items.Count <= 1)
@@ -120,9 +112,7 @@ void kitapLoad()
             // ARAMA FİLTRESİ
             if (!string.IsNullOrEmpty(aramaMetni))
             {
-                // DİKKAT: 'kayitNo' sayı olduğu için direkt LIKE kullanamayız.
                 // Önce 'Convert' ile yazıya çevirip sonra arama yapıyoruz.
-                // Eski hatalı kod: "kayitNo LIKE..." kısmını kaldırdık.
                 filtre += string.Format("(kitapAdi LIKE '%{0}%' OR yazarAdi LIKE '%{0}%' OR Convert(kayitNo, 'System.String') LIKE '%{0}%')", aramaMetni);
             }
 
