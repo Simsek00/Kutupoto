@@ -2,14 +2,9 @@
 {
     partial class Kayit
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
+
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
@@ -22,10 +17,6 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             lblAd = new Label();
@@ -40,7 +31,7 @@
             label1 = new Label();
             panel1 = new Panel();
             btnCikis = new Button();
-            lblKurallar = new Label(); // YENİ: Kurallar etiketi oluşturuldu
+            lblKurallar = new Label(); 
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -134,7 +125,7 @@
             lblSifre.TabIndex = 6;
             lblSifre.Text = "Şifre";
             // 
-            // lblKurallar (YENİ EKLENEN KISIM)
+            // lblKurallar 
             // 
             lblKurallar.AutoSize = true;
             lblKurallar.Font = new Font("Segoe UI", 8.5F, FontStyle.Italic, GraphicsUnit.Point);
@@ -153,7 +144,6 @@
             btnKayit.FlatStyle = FlatStyle.Flat;
             btnKayit.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
             btnKayit.ForeColor = Color.White;
-            // DEĞİŞİKLİK: Butonu biraz aşağı kaydırdık (Y: 390 -> 405) ki yazılar sığsın
             btnKayit.Location = new Point(50, 405); 
             btnKayit.Name = "btnKayit";
             btnKayit.Size = new Size(300, 45);
@@ -207,12 +197,11 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(44, 62, 80);
-            // DEĞİŞİKLİK: Formu biraz uzattık (480 -> 500) ki alttan sıkışmasın
             ClientSize = new Size(400, 500); 
             Controls.Add(panel1);
             Controls.Add(label1);
             Controls.Add(btnKayit);
-            Controls.Add(lblKurallar); // YENİ: Etiketi forma ekledik
+            Controls.Add(lblKurallar); 
             Controls.Add(txtSifre);
             Controls.Add(lblSifre);
             Controls.Add(txtSoyad);
@@ -245,6 +234,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCikis;
-        private System.Windows.Forms.Label lblKurallar; // YENİ TANIMLAMA
+        private System.Windows.Forms.Label lblKurallar;
     }
 }

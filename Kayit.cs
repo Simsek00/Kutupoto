@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq; // This library is required for LINQ character checks (Any, All)
+using System.Linq; 
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -46,8 +46,6 @@ namespace Kutupoto
 
             string girilenSifre = txtSifre.Text;
 
-            // --- PASSWORD VALIDATION RULES ---
-
             // Rule 1: Must be at least 6 characters long
             if (girilenSifre.Length < 6)
             {
@@ -70,15 +68,11 @@ namespace Kutupoto
             }
 
             // Rule 4: Must NOT contain special characters (Only letters and digits allowed)
-            // char.IsLetterOrDigit checks if the character is a letter or a decimal digit.
-            // If the password contains anything else (All returns false), trigger error.
             if (!girilenSifre.All(char.IsLetterOrDigit))
             {
                 MessageBox.Show("Şifre özel karakter (nokta, virgül, @, vb.) içeremez. Sadece harf ve rakam kullanınız.", "Şifre Hatası", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // --- VALIDATION COMPLETE ---
 
 
             // 2. Hash the password for security
@@ -115,7 +109,6 @@ namespace Kutupoto
 
         private void btnCikis_Click(object sender, EventArgs e)
         {
-            // Close the current form
             this.Close();
         }
     }

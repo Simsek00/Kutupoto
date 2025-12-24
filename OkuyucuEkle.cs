@@ -118,8 +118,8 @@ namespace Kutupoto
             // Instead of DELETE FROM, we update the status to 0 (Passive/Deleted)
             IDataBase.executeNonQuery("update okuyucular set aktif = 0 where id = @id", new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId });
             
-            temizle();      // Clear the form fields
-            okuyucularLoad(); // Refresh the grid
+            temizle();     
+            okuyucularLoad(); 
         }
 
         // Event Handler for the Save/Update Button
@@ -159,7 +159,6 @@ namespace Kutupoto
                 radioBtnKadin.Checked = true; // Default fallback
 
                 // Query the database to get full details of the selected reader
-                // (Alternatively, data could be pulled directly from the grid cells to save a DB call)
                 foreach (DataRow row in IDataBase.DatatoDataTable("select * from okuyucular where aktif = 1 and id = @id", new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId }).Rows)
                 {
                     txtAd.Text = row["adi"].ToString();
@@ -196,7 +195,7 @@ namespace Kutupoto
             // Iterate through all controls inside the 'grpBilgiler' container
             foreach (var item in grpBilgiler.Controls)
             {
-                // Clear TextBoxes
+                
                 if (item is TextBox)
                 {
                     ((TextBox)item).Text = "";
@@ -215,12 +214,11 @@ namespace Kutupoto
         {
             if (okuyucuId > 0)
             {
-                // Confirmation Dialog
                 DialogResult dialogResult = MessageBox.Show("Seçili okuyucuyu silmek istediğinize emin misiniz?", "Okuyucu Sil", MessageBoxButtons.YesNo);
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    okuyucuSil(); // Perform soft delete
+                    okuyucuSil(); 
                 }
                 else
                 {
@@ -229,7 +227,7 @@ namespace Kutupoto
             }
             else
             {
-                MessageBox.Show("Okuyucu Seçiniz"); // "Please select a reader"
+                MessageBox.Show("Okuyucu Seçiniz"); 
             }
         }
 
