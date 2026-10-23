@@ -18,8 +18,6 @@ namespace Kutupoto
         public Kiralama()
         {
             InitializeComponent();
-            okuyucularLoad();
-            kitaplarLoad();
         }
         int okuyucuId = 0;
         int kitapId = 0;
@@ -108,10 +106,16 @@ namespace Kutupoto
             parameters.Add(new SqlParameter("@emanetVerilisTarihi", SqlDbType.Date) { Value = DateTime.Now });
             parameters.Add(new SqlParameter("@emanetGeriAlmaTarihi", SqlDbType.Date) { Value = DateTime.Now.AddDays(30) });
 
+            // Kitap durumu ve emanet kaydı tek transaction içinde: biri başarısız olursa ikisi de geri alınır.
             IDataBase.executeNonQuery(
-                "update kitaplar set durum = 0 where id = @kitapId " +
-                "insert into emanetler (kitapId, okuyucuId, emanetVerilisTarihi, emanetGeriAlmaTarihi) values (@kitapId, @okuyucuId, @emanetVerilisTarihi, @emanetGeriAlmaTarihi)", parameters);
+                "set xact_abort on; begin tran; " +
+                "update kitaplar set durum = 0 where id = @kitapId; " +
+                "insert into emanetler (kitapId, okuyucuId, emanetVerilisTarihi, emanetGeriAlmaTarihi) values (@kitapId, @okuyucuId, @emanetVerilisTarihi, @emanetGeriAlmaTarihi); " +
+                "commit tran;", parameters);
 
+            MessageBox.Show("Kitap emanet edildi. Teslim tarihi: " + DateTime.Now.AddDays(30).ToShortDateString());
+
+            getOkuyucuProfil();
             kitaplarLoad();
         }
 
@@ -152,7 +156,9 @@ namespace Kutupoto
                 return;
             }
 
-            if (getEmanetId() == 0)
+            int currentEmanetId = getEmanetId();
+
+            if (currentEmanetId == 0)
             {
                 MessageBox.Show("Seçili okuyucunun emaneti yok!");
                 return;
@@ -161,11 +167,17 @@ namespace Kutupoto
 
             List<SqlParameter> parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@kitapId", SqlDbType.Int) { Value = kitapId });
+            parameters.Add(new SqlParameter("@emanetId", SqlDbType.Int) { Value = currentEmanetId });
             parameters.Add(new SqlParameter("@emanetIslemTarihi", SqlDbType.Date) { Value = DateTime.Now });
 
+            // Sadece açık olan emanet kapatılır; aynı kitabın geçmiş emanet kayıtlarına dokunulmaz.
             IDataBase.executeNonQuery(
-                "update kitaplar set durum = 1 where id = @kitapId " +
-                "update emanetler set emanetIslemTarihi = @emanetIslemTarihi, durum = 1 where kitapId = @kitapId", parameters);
+                "set xact_abort on; begin tran; " +
+                "update kitaplar set durum = 1 where id = @kitapId; " +
+                "update emanetler set emanetIslemTarihi = @emanetIslemTarihi, durum = 1 where id = @emanetId; " +
+                "commit tran;", parameters);
+
+            MessageBox.Show("Kitap iade alındı.");
 
             getOkuyucuProfil();
             kitaplarLoad();
