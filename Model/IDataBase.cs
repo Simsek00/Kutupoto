@@ -20,16 +20,13 @@ namespace Kutupoto.Model
         // METHOD 1: DatatoDataTable
         // Purpose: Executes a SELECT query and returns the results as a DataTable.
         // It uses SqlDataAdapter which automatically handles opening/closing connections.
+        // SqlException is not caught here: it reaches the UI layer (and the global handler in Program.cs) with its stack trace intact.
         public static DataTable DatatoDataTable(string query, List<SqlParameter> parameters)
         {
-            try
+            // "using" disposes the connection, command and adapter even if an error occurs
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                // Create a new connection using the generic connection string
-                SqlConnection con = new SqlConnection(connectionString);
-
-                // Prepare the command with the query and connection
-                SqlCommand cmd = new SqlCommand(query, con);
-
                 // Add parameters to the command to prevent SQL Injection
                 if (parameters != null)
                 {
@@ -37,18 +34,15 @@ namespace Kutupoto.Model
                 }
 
                 // Use SqlDataAdapter to fetch data (Disconnected Architecture)
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
 
-                // Fill the DataTable with the result set from the database
-                da.Fill(dt);
+                    // Fill the DataTable with the result set from the database
+                    da.Fill(dt);
 
-                return dt;
-            }
-            catch (SqlException ex)
-            {
-                // Re-throw the exception to be handled by the UI layer
-                throw ex;
+                    return dt;
+                }
             }
         }
 
@@ -66,32 +60,22 @@ namespace Kutupoto.Model
 
         // METHOD 2: executeNonQuery
         // Purpose: Executes commands that DO NOT return data (INSERT, UPDATE, DELETE).
-        // It manages the connection state (Open/Close) manually.
         public static void executeNonQuery(string query, List<SqlParameter> parameters)
         {
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand(query, con);
-
-            // We must open the connection manually for ExecuteNonQuery
-            con.Open();
-            try
+            // "using" closes the connection even if an error occurs, preventing leaks
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 if (parameters != null)
                 {
                     cmd.Parameters.AddRange(parameters.ToArray());
                 }
 
+                // We must open the connection manually for ExecuteNonQuery
+                con.Open();
+
                 // Execute the command (returns the number of affected rows)
                 cmd.ExecuteNonQuery();
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                // CRITICAL: Ensure the connection closes even if an error occurs to prevent leaks.
-                con.Close();
             }
         }
 
@@ -104,34 +88,21 @@ namespace Kutupoto.Model
         // METHOD 3: executeScalar
         // Purpose: Executes a query that returns a SINGLE value (e.g., Count, ID, Sum).
         // Used often for "SELECT @@IDENTITY" or "SELECT COUNT(*)".
-        public static object executeScalar(string query, List<SqlParameter> parameters)
+        public static object? executeScalar(string query, List<SqlParameter> parameters)
         {
-            object value = null;
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand(query, con);
-
-            con.Open();
-            try
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 if (parameters != null)
                 {
                     cmd.Parameters.AddRange(parameters.ToArray());
                 }
 
-                // ExecuteScalar returns the first column of the first row
-                value = cmd.ExecuteScalar();
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
-            }
+                con.Open();
 
-            // Return the single value (as an object, needs casting later)
-            return value;
+                // ExecuteScalar returns the first column of the first row (as an object, needs casting later)
+                return cmd.ExecuteScalar();
+            }
         }
     }
 }
