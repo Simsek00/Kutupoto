@@ -1,9 +1,6 @@
 using Kutupoto.Model;
-using Microsoft.SqlServer.Server;
 using System.Data;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Kutupoto
 {
@@ -12,16 +9,6 @@ namespace Kutupoto
         public Giris()
         {
             InitializeComponent();
-        }
-
-        // This function converts the incoming password into a secure SHA-256 hash string.
-        public static string sha256_hash(string sifre)
-        {
-            using (SHA256 hash = SHA256Managed.Create())
-            {
-                // Compute the hash and convert the byte array to a hexadecimal string
-                return string.Concat(hash.ComputeHash(Encoding.UTF8.GetBytes(sifre)).Select(l => l.ToString("X2")));
-            }
         }
 
         private void Giris_Load(object sender, EventArgs e)
@@ -45,20 +32,29 @@ namespace Kutupoto
         // Event handler for the Login button
         private void butGiris_Click(object sender, EventArgs e)
         {
-            // Hash the password entered by the user to match the database format
-            string girilenGuvenliSifre = sha256_hash(txtSifre.Text);
-
             // Prepare SQL parameters to prevent SQL Injection
             List<SqlParameter> parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@KullaniciAdi", SqlDbType.VarChar) { Value = txtKullanici.Text });
-            parameters.Add(new SqlParameter("@Sifre", SqlDbType.VarChar) { Value = girilenGuvenliSifre });
 
-            // Execute the query to check if a user exists with the matching username and hashed password
-            DataTable dt = IDataBase.DatatoDataTable("select * from kullanicilar where KullaniciAdi = @KullaniciAdi and Sifre = @Sifre", parameters);
+            // Fetch the user by username; the salted hash is verified in code
+            DataTable dt = IDataBase.DatatoDataTable("select id, Sifre from kullanicilar where KullaniciAdi = @KullaniciAdi", parameters);
 
-            // Check if any rows were returned (Login Successful)
-            if (dt.Rows.Count > 0)
+            string kayitliHash = dt.Rows.Count > 0 ? dt.Rows[0]["Sifre"].ToString() ?? "" : "";
+
+            if (dt.Rows.Count > 0 && SifreHash.Dogrula(txtSifre.Text, kayitliHash))
             {
+                int kullaniciId = Convert.ToInt32(dt.Rows[0]["id"]);
+                UserInfo.userId = kullaniciId;
+
+                // Upgrade legacy unsalted SHA-256 hashes to PBKDF2 after a successful login
+                if (SifreHash.EskiFormatMi(kayitliHash))
+                {
+                    List<SqlParameter> guncelle = new List<SqlParameter>();
+                    guncelle.Add(new SqlParameter("@Sifre", SqlDbType.NVarChar) { Value = SifreHash.Olustur(txtSifre.Text) });
+                    guncelle.Add(new SqlParameter("@id", SqlDbType.Int) { Value = kullaniciId });
+                    IDataBase.executeNonQuery("update kullanicilar set Sifre = @Sifre where id = @id", guncelle);
+                }
+
                 // Login Successful
                 AnaSayfa anaSayfa = new AnaSayfa();
                 

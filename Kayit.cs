@@ -1,5 +1,4 @@
 ﻿using Kutupoto.Model;
-using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,16 +17,6 @@ namespace Kutupoto
         public Kayit()
         {
             InitializeComponent();
-        }
-
-        // Helper function to hash the password using SHA-256 algorithm
-        public static string sha256_hash(string sifre)
-        {
-            using (SHA256 hash = SHA256Managed.Create())
-            {
-                // Compute hash and convert byte array to hex string
-                return string.Concat(hash.ComputeHash(Encoding.UTF8.GetBytes(sifre)).Select(l => l.ToString("X2")));
-            }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -75,8 +64,8 @@ namespace Kutupoto
             }
 
 
-            // 2. Hash the password for security
-            string guvenliSifre = sha256_hash(girilenSifre);
+            // 2. Hash the password with a random salt (PBKDF2)
+            string guvenliSifre = SifreHash.Olustur(girilenSifre);
 
             // 3. Save to database
             try
