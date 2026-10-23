@@ -1,11 +1,58 @@
+# ---------------------------------------------
+# Visual Studio / .NET
+# ---------------------------------------------
+
 # Visual Studio geçici dosyaları
 .vs/
 .vscode/
-
-# Derleme çıktıları (Bunları yüklememelisin)
-bin/
-obj/
-
-# Kullanıcıya özel ayarlar
-*.user
 *.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Derleme çıktıları
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+publish/
+*.pdb
+*.ilk
+*.obj
+*.tmp
+*.cache
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Test sonuçları
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+
+# ReSharper / Rider
+_ReSharper*/
+*.DotSettings.user
+.idea/
+
+# Kısayollar ve OS dosyaları
+*.lnk
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
