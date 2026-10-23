@@ -214,6 +214,14 @@ namespace Kutupoto
         {
             if (okuyucuId > 0)
             {
+                // Pasif okuyucular emanet ekranında listelenmez; açık emaneti varsa kitap iade edilemez hale gelir.
+                object emanetSayisi = IDataBase.executeScalar("select count(*) from emanetler where okuyucuId = @id and durum = 0 and aktif = 1", new List<SqlParameter>() { new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId } });
+                if (Convert.ToInt32(emanetSayisi) > 0)
+                {
+                    MessageBox.Show("Bu okuyucunun iade etmediği bir kitap var. Silmeden önce iade alınmalıdır.", "Silinemez", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 DialogResult dialogResult = MessageBox.Show("Seçili okuyucuyu silmek istediğinize emin misiniz?", "Okuyucu Sil", MessageBoxButtons.YesNo);
 
                 if (dialogResult == DialogResult.Yes)
