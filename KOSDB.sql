@@ -24,6 +24,14 @@ BEGIN
 END
 GO
 
+-- Kullanıcı adları tekil olmalı. Var olan veritabanlarında da çalışır; tekrar eden kullanıcı adı varsa kısıt eklenmez.
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = N'UQ_kullanicilar_KullaniciAdi')
+   AND NOT EXISTS (SELECT KullaniciAdi FROM [dbo].[kullanicilar] GROUP BY KullaniciAdi HAVING COUNT(*) > 1)
+BEGIN
+    ALTER TABLE [dbo].[kullanicilar] ADD CONSTRAINT [UQ_kullanicilar_KullaniciAdi] UNIQUE ([KullaniciAdi])
+END
+GO
+
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[kitaplar]') AND type in (N'U'))
 BEGIN
     CREATE TABLE [dbo].[kitaplar](
