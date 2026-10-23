@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -69,21 +70,26 @@ namespace Kutupoto
                 dgMevcutKitaplar.Columns["durum"].Visible = false;
 
             // Tür Filtresini (ComboBox) Doldurma İşlemi
-            if (cmbTurFiltre.Items.Count <= 1)
-            {
-                cmbTurFiltre.Items.Clear();
-                cmbTurFiltre.Items.Add("Tümü");
+            // Sayfa her aktif olduğunda yeniden doldurulur; böylece yeni eklenen türler de listede görünür.
+            string? oncekiTur = cmbTurFiltre.SelectedItem?.ToString();
 
-                foreach (DataRow row in dtKitaplar.Rows)
+            cmbTurFiltre.Items.Clear();
+            cmbTurFiltre.Items.Add("Tümü");
+
+            foreach (DataRow row in dtKitaplar.Rows)
+            {
+                string tur = row["tur"].ToString() ?? "";
+                if (!string.IsNullOrEmpty(tur) && !cmbTurFiltre.Items.Contains(tur))
                 {
-                    string tur = row["tur"].ToString();
-                    if (!string.IsNullOrEmpty(tur) && !cmbTurFiltre.Items.Contains(tur))
-                    {
-                        cmbTurFiltre.Items.Add(tur);
-                    }
+                    cmbTurFiltre.Items.Add(tur);
                 }
-                cmbTurFiltre.SelectedIndex = 0; 
             }
+
+            int index = oncekiTur != null ? cmbTurFiltre.Items.IndexOf(oncekiTur) : -1;
+            cmbTurFiltre.SelectedIndex = index >= 0 ? index : 0;
+
+            // Seçili filtre ve arama metni yeniden yüklenen listeye de uygulanır.
+            ListeyiFiltrele();
         }
 
         // 3. OKUYUCULARI YÜKLE
@@ -100,12 +106,12 @@ namespace Kutupoto
         {
             if (dtKitaplar == null) return;
 
-            // Tek tırnak (') karakteri SQL sorgularını patlatır, onu temizliyoruz
-            string aramaMetni = txtKitapAra.Text.Trim().Replace("'", "''");
+            // Tek tırnak (') filtre ifadesini bozar; LIKE içinde [, ], *, % joker karakter sayılır, köşeli paranteze alınarak düz metin yapılır
+            string aramaMetni = Regex.Replace(txtKitapAra.Text.Trim(), @"[\[\]\*%]", "[$0]").Replace("'", "''");
 
             string secilenTur = "";
             if (cmbTurFiltre.SelectedItem != null)
-                secilenTur = cmbTurFiltre.SelectedItem.ToString();
+                secilenTur = (cmbTurFiltre.SelectedItem.ToString() ?? "").Replace("'", "''");
 
             string filtre = "";
 
