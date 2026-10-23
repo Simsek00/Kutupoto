@@ -12,9 +12,9 @@ Kutupoto is a **Windows desktop library automation** application built for schoo
 
 #### Login and Registration
 - Login screen with username and password.
-- Registration screen for new users (first name, last name, username, password).
+- Registration screen for new users (first name, last name, username, password). Usernames must be unique.
 - Password rules: at least 6 characters, at least 1 uppercase and 1 lowercase letter, letters and digits only.
-- Passwords are stored as a **SHA-256 hash**, not as plain text.
+- Passwords are stored as a salted **PBKDF2 (SHA-256) hash**, not as plain text. Older SHA-256 hashes are upgraded automatically on the next login.
 - All queries use parameterized SQL to protect against SQL injection.
 
 #### Home Page
@@ -29,12 +29,12 @@ Kutupoto is a **Windows desktop library automation** application built for schoo
 - Add a book: registration no, title, author, page count, genre, publisher, publication year, cabinet no and shelf no.
 - The registration number is assigned automatically.
 - Update book details.
-- Delete a book. After deletion, registration numbers are renumbered.
+- Delete a book. A book on loan cannot be deleted. The record is marked inactive, so loan history and registration numbers are preserved.
 
 #### Reader (Member) Management
 - Add a reader: first name, last name, gender, class, school no, mobile phone, address.
 - Update reader details.
-- Delete a reader. The record is not removed from the database; it is marked inactive.
+- Delete a reader. A reader with an unreturned book cannot be deleted. The record is not removed from the database; it is marked inactive.
 
 #### Loans
 - Lend a book to the selected reader. The loan period is **30 days**.
@@ -51,10 +51,10 @@ Kutupoto is a **Windows desktop library automation** application built for schoo
 | Area | Technology |
 | --- | --- |
 | Language | C# |
-| Platform | .NET 6 (`net6.0-windows`) |
+| Platform | .NET 8 (`net8.0-windows`) |
 | UI | Windows Forms |
 | Database | Microsoft SQL Server (Express) |
-| Data access | ADO.NET – `System.Data.SqlClient` 4.8.5 |
+| Data access | ADO.NET – `Microsoft.Data.SqlClient` 5.2.2 |
 | IDE | Visual Studio 2022 |
 
 ### Database Schema
@@ -63,7 +63,7 @@ Kutupoto is a **Windows desktop library automation** application built for schoo
 
 | Table | Description |
 | --- | --- |
-| `kullanicilar` | Users who log in to the app (passwords as SHA-256 hashes) |
+| `kullanicilar` | Users who log in to the app (passwords as PBKDF2 hashes; usernames are unique) |
 | `kitaplar` | Books. `durum = 1` on the shelf, `0` on loan; `aktif` marks whether the record is valid |
 | `okuyucular` | Readers (members) |
 | `emanetler` | Loan records: issue, due and transaction dates |
@@ -74,7 +74,7 @@ All SQL queries used in the project are listed in `queries.sql`.
 
 #### Requirements
 - Windows 10/11
-- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (or Visual Studio 2022 with the ".NET desktop development" workload)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (or Visual Studio 2022 with the ".NET desktop development" workload)
 - [SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads). The default instance name should be `SQLEXPRESS`.
 - (Optional) SQL Server Management Studio (SSMS)
 
@@ -95,8 +95,10 @@ cd Kutupoto
 
 Or from the command line:
 ```bash
-sqlcmd -S .\SQLEXPRESS -E -i KOSDB.sql
+sqlcmd -S .\SQLEXPRESS -E -C -i KOSDB.sql
 ```
+
+**Upgrading an existing database:** If you created `KOSDb` with an older version of the project, run `KOSDB.sql` once more. It converts the text columns from `varchar` to `nvarchar` so Turkish characters are preserved, and adds the unique constraint on usernames. Existing data is kept.
 
 #### 3. Check the connection string
 
@@ -149,6 +151,7 @@ Kutupoto/
 ├── Kiralama.cs             # Lending, loan extension, returns, late fee
 ├── Model/
 │   ├── IDataBase.cs        # ADO.NET helper class and connection string
+│   ├── SifreHash.cs        # PBKDF2 password hashing and verification
 │   ├── DatabaseKurulum.cs  # Automatic database setup on first launch
 │   └── UserInfo.cs         # Logged-in user info
 ├── KOSDB.sql               # Database and table creation script
@@ -170,9 +173,9 @@ Kutupoto, okul ve küçük kütüphaneler için geliştirilmiş bir **Windows ma
 
 #### Giriş ve Kayıt
 - Kullanıcı adı ve şifre ile giriş ekranı.
-- Yeni kullanıcı kayıt ekranı (ad, soyad, kullanıcı adı, şifre).
+- Yeni kullanıcı kayıt ekranı (ad, soyad, kullanıcı adı, şifre). Kullanıcı adları tekildir.
 - Şifre kuralları: en az 6 karakter, en az 1 büyük ve 1 küçük harf, yalnızca harf ve rakam.
-- Şifreler veritabanında düz metin olarak değil, **SHA-256 özeti** olarak saklanır.
+- Şifreler veritabanında düz metin olarak değil, rastgele salt ile **PBKDF2 (SHA-256) özeti** olarak saklanır. Eski SHA-256 kayıtları ilk girişte otomatik olarak yükseltilir.
 - Tüm sorgularda parametreli SQL kullanılır (SQL Injection'a karşı).
 
 #### Ana Sayfa
@@ -187,12 +190,12 @@ Kutupoto, okul ve küçük kütüphaneler için geliştirilmiş bir **Windows ma
 - Kitap ekleme: kayıt no, kitap adı, yazar, sayfa sayısı, tür, yayınevi, basım yılı, dolap no ve raf no.
 - Kayıt numarası otomatik verilir.
 - Kitap bilgilerini güncelleme.
-- Kitap silme. Silmeden sonra kayıt numaraları yeniden sıralanır.
+- Kitap silme. Emanetteki kitap silinemez. Kayıt pasife alınır; emanet geçmişi ve kayıt numaraları korunur.
 
 #### Okuyucu (Üye) İşlemleri
 - Okuyucu ekleme: ad, soyad, cinsiyet, sınıf, okul no, cep telefonu, adres.
 - Okuyucu bilgilerini güncelleme.
-- Okuyucu silme. Kayıt veritabanından silinmez, pasife alınır.
+- Okuyucu silme. İade etmediği kitap olan okuyucu silinemez. Kayıt veritabanından silinmez, pasife alınır.
 
 #### Emanet / Kiralama İşlemleri
 - Seçilen okuyucuya kitap emanet etme. Teslim süresi **30 gündür**.
@@ -209,10 +212,10 @@ Kutupoto, okul ve küçük kütüphaneler için geliştirilmiş bir **Windows ma
 | Alan | Teknoloji |
 | --- | --- |
 | Dil | C# |
-| Platform | .NET 6 (`net6.0-windows`) |
+| Platform | .NET 8 (`net8.0-windows`) |
 | Arayüz | Windows Forms |
 | Veritabanı | Microsoft SQL Server (Express) |
-| Veri erişimi | ADO.NET – `System.Data.SqlClient` 4.8.5 |
+| Veri erişimi | ADO.NET – `Microsoft.Data.SqlClient` 5.2.2 |
 | IDE | Visual Studio 2022 |
 
 ### Veritabanı Yapısı
@@ -221,7 +224,7 @@ Kutupoto, okul ve küçük kütüphaneler için geliştirilmiş bir **Windows ma
 
 | Tablo | Açıklama |
 | --- | --- |
-| `kullanicilar` | Uygulamaya giriş yapan kullanıcılar (şifreler SHA-256 özetiyle) |
+| `kullanicilar` | Uygulamaya giriş yapan kullanıcılar (şifreler PBKDF2 özetiyle; kullanıcı adları tekil) |
 | `kitaplar` | Kitap bilgileri. `durum = 1` rafta, `0` emanette; `aktif` kaydın geçerli olup olmadığını gösterir |
 | `okuyucular` | Okuyucu (üye) bilgileri |
 | `emanetler` | Emanet kayıtları: veriliş, geri alma ve işlem tarihleri |
@@ -232,7 +235,7 @@ Projede kullanılan tüm SQL sorguları `queries.sql` dosyasında toplu olarak l
 
 #### Gereksinimler
 - Windows 10/11
-- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (ya da ".NET masaüstü geliştirme" iş yükü yüklü Visual Studio 2022)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (ya da ".NET masaüstü geliştirme" iş yükü yüklü Visual Studio 2022)
 - [SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads). Varsayılan örnek adı `SQLEXPRESS` olmalıdır.
 - (İsteğe bağlı) SQL Server Management Studio (SSMS)
 
@@ -253,8 +256,10 @@ cd Kutupoto
 
 Komut satırından da çalıştırabilirsiniz:
 ```bash
-sqlcmd -S .\SQLEXPRESS -E -i KOSDB.sql
+sqlcmd -S .\SQLEXPRESS -E -C -i KOSDB.sql
 ```
+
+**Var olan veritabanını güncelleme:** `KOSDb`'yi projenin eski bir sürümüyle oluşturduysanız `KOSDB.sql`'i bir kez daha çalıştırın. Script, Türkçe karakterler korunsun diye metin sütunlarını `varchar`'dan `nvarchar`'a çevirir ve kullanıcı adlarına tekillik kısıtı ekler. Mevcut veriler korunur.
 
 #### 3. Bağlantı ayarını (connection string) kontrol edin
 
@@ -307,6 +312,7 @@ Kutupoto/
 ├── Kiralama.cs             # Emanet verme, süre uzatma, iade, gecikme bedeli
 ├── Model/
 │   ├── IDataBase.cs        # ADO.NET yardımcı sınıfı ve connection string
+│   ├── SifreHash.cs        # PBKDF2 ile şifre hashleme ve doğrulama
 │   ├── DatabaseKurulum.cs  # İlk açılışta otomatik veritabanı kurulumu
 │   └── UserInfo.cs         # Oturum açan kullanıcı bilgisi
 ├── KOSDB.sql               # Veritabanı ve tablo oluşturma scripti
