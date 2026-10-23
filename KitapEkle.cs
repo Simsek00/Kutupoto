@@ -161,21 +161,24 @@ namespace Kutupoto
                 return;
             }
 
-            DialogResult cevap = MessageBox.Show("Kitabı silmek istediğinize emin misiniz? (Numaralar yeniden sıralanacak)", "Silme Onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            // Emanetteki bir kitap silinirse emanet kaydı sahipsiz kalır ve okuyucu iade yapamaz.
+            object emanetSayisi = IDataBase.executeScalar("select count(*) from emanetler where kitapId = @id and durum = 0 and aktif = 1", new List<SqlParameter>() { new SqlParameter("@id", SqlDbType.Int) { Value = kitapId } });
+            if (Convert.ToInt32(emanetSayisi) > 0)
+            {
+                MessageBox.Show("Bu kitap şu an emanette. Silmeden önce iade alınmalıdır.", "Silinemez", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult cevap = MessageBox.Show("Kitabı silmek istediğinize emin misiniz?", "Silme Onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (cevap == DialogResult.Yes)
             {
-                int silinenKayitNo = Convert.ToInt32(txtKayitNo.Text);
-
+                // Soft delete: kayıt ve kayıt numarası korunur, böylece emanet geçmişi ve kitap etiketleri bozulmaz.
                 List<SqlParameter> paramSil = new List<SqlParameter>();
                 paramSil.Add(new SqlParameter("@id", SqlDbType.Int) { Value = kitapId });
-                IDataBase.executeNonQuery("delete from kitaplar where id = @id", paramSil);
+                IDataBase.executeNonQuery("update kitaplar set aktif = 0 where id = @id", paramSil);
 
-                List<SqlParameter> paramUpdate = new List<SqlParameter>();
-                paramUpdate.Add(new SqlParameter("@silinenNo", SqlDbType.Int) { Value = silinenKayitNo });
-                IDataBase.executeNonQuery("UPDATE kitaplar SET kayitNo = kayitNo - 1 WHERE kayitNo > @silinenNo", paramUpdate);
-
-                MessageBox.Show("Kitap silindi ve liste yeniden numaralandırıldı.");
+                MessageBox.Show("Kitap silindi.");
 
                 temizle();
                 kitaplarLoad();
