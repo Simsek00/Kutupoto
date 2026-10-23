@@ -71,7 +71,7 @@ namespace Kutupoto
             try
             {
                 // Usernames must be unique, otherwise login would match an arbitrary account
-                object mevcut = IDataBase.executeScalar("select count(*) from kullanicilar where KullaniciAdi = @KullaniciAdi", new List<SqlParameter>() { new SqlParameter("@KullaniciAdi", SqlDbType.VarChar) { Value = txtKullanici.Text } });
+                object mevcut = IDataBase.executeScalar("select count(*) from kullanicilar where KullaniciAdi = @KullaniciAdi", new List<SqlParameter>() { new SqlParameter("@KullaniciAdi", SqlDbType.NVarChar) { Value = txtKullanici.Text } });
                 if (Convert.ToInt32(mevcut) > 0)
                 {
                     MessageBox.Show("Bu kullanıcı adı zaten kullanılıyor. Lütfen başka bir kullanıcı adı seçin.", "Kullanıcı Adı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -79,10 +79,10 @@ namespace Kutupoto
                 }
 
                 List<SqlParameter> parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter("@adi", SqlDbType.VarChar) { Value = txtAd.Text });
-                parameters.Add(new SqlParameter("@soyadi", SqlDbType.VarChar) { Value = txtSoyad.Text });
-                parameters.Add(new SqlParameter("@KullaniciAdi", SqlDbType.VarChar) { Value = txtKullanici.Text });  
-                parameters.Add(new SqlParameter("@Sifre", SqlDbType.VarChar) { Value = guvenliSifre });
+                parameters.Add(new SqlParameter("@adi", SqlDbType.NVarChar) { Value = txtAd.Text });
+                parameters.Add(new SqlParameter("@soyadi", SqlDbType.NVarChar) { Value = txtSoyad.Text });
+                parameters.Add(new SqlParameter("@KullaniciAdi", SqlDbType.NVarChar) { Value = txtKullanici.Text });  
+                parameters.Add(new SqlParameter("@Sifre", SqlDbType.NVarChar) { Value = guvenliSifre });
 
                 // Execute the insert query
                 IDataBase.executeNonQuery("insert into kullanicilar (adi, soyadi, KullaniciAdi, Sifre) values (@adi, @soyadi, @KullaniciAdi, @Sifre)", parameters);

@@ -79,14 +79,14 @@ namespace Kutupoto
             // Kutudaki numarayı al
             List<SqlParameter> parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@kayitNo", SqlDbType.Int) { Value = txtKayitNo.Text });
-            parameters.Add(new SqlParameter("@kitapAdi", SqlDbType.VarChar) { Value = txtKitapAdi.Text });
-            parameters.Add(new SqlParameter("@yazarAdi", SqlDbType.VarChar) { Value = txtYazar.Text });
-            parameters.Add(new SqlParameter("@sayfaSayisi", SqlDbType.VarChar) { Value = txtSayfa.Text });
-            parameters.Add(new SqlParameter("@tur", SqlDbType.VarChar) { Value = txtTur.Text });
-            parameters.Add(new SqlParameter("@yayinevi", SqlDbType.VarChar) { Value = txtYayinevi.Text });
-            parameters.Add(new SqlParameter("@basimYili", SqlDbType.VarChar) { Value = txtBasimYili.Text });
-            parameters.Add(new SqlParameter("@dolapNo", SqlDbType.VarChar) { Value = txtDolapNo.Text });
-            parameters.Add(new SqlParameter("@rafNo", SqlDbType.VarChar) { Value = txtRafNo.Text });
+            parameters.Add(new SqlParameter("@kitapAdi", SqlDbType.NVarChar) { Value = txtKitapAdi.Text });
+            parameters.Add(new SqlParameter("@yazarAdi", SqlDbType.NVarChar) { Value = txtYazar.Text });
+            parameters.Add(new SqlParameter("@sayfaSayisi", SqlDbType.NVarChar) { Value = txtSayfa.Text });
+            parameters.Add(new SqlParameter("@tur", SqlDbType.NVarChar) { Value = txtTur.Text });
+            parameters.Add(new SqlParameter("@yayinevi", SqlDbType.NVarChar) { Value = txtYayinevi.Text });
+            parameters.Add(new SqlParameter("@basimYili", SqlDbType.NVarChar) { Value = txtBasimYili.Text });
+            parameters.Add(new SqlParameter("@dolapNo", SqlDbType.NVarChar) { Value = txtDolapNo.Text });
+            parameters.Add(new SqlParameter("@rafNo", SqlDbType.NVarChar) { Value = txtRafNo.Text });
 
             IDataBase.executeNonQuery("insert into kitaplar (kayitNo, kitapAdi, yazarAdi, sayfaSayisi, tur, yayinevi, basimYili, dolapNo, rafNo) values (@kayitNo, @kitapAdi, @yazarAdi, @sayfaSayisi, @tur, @yayinevi, @basimYili, @dolapNo, @rafNo)", parameters);
 
@@ -99,14 +99,14 @@ namespace Kutupoto
         void kitapGuncelle()
         {
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@kitapAdi", SqlDbType.VarChar) { Value = txtKitapAdi.Text });
-            parameters.Add(new SqlParameter("@yazarAdi", SqlDbType.VarChar) { Value = txtYazar.Text });
-            parameters.Add(new SqlParameter("@sayfaSayisi", SqlDbType.VarChar) { Value = txtSayfa.Text });
-            parameters.Add(new SqlParameter("@tur", SqlDbType.VarChar) { Value = txtTur.Text });
-            parameters.Add(new SqlParameter("@yayinevi", SqlDbType.VarChar) { Value = txtYayinevi.Text });
-            parameters.Add(new SqlParameter("@basimyili", SqlDbType.VarChar) { Value = txtBasimYili.Text });
-            parameters.Add(new SqlParameter("@dolapNo", SqlDbType.VarChar) { Value = txtDolapNo.Text });
-            parameters.Add(new SqlParameter("@rafNo", SqlDbType.VarChar) { Value = txtRafNo.Text });
+            parameters.Add(new SqlParameter("@kitapAdi", SqlDbType.NVarChar) { Value = txtKitapAdi.Text });
+            parameters.Add(new SqlParameter("@yazarAdi", SqlDbType.NVarChar) { Value = txtYazar.Text });
+            parameters.Add(new SqlParameter("@sayfaSayisi", SqlDbType.NVarChar) { Value = txtSayfa.Text });
+            parameters.Add(new SqlParameter("@tur", SqlDbType.NVarChar) { Value = txtTur.Text });
+            parameters.Add(new SqlParameter("@yayinevi", SqlDbType.NVarChar) { Value = txtYayinevi.Text });
+            parameters.Add(new SqlParameter("@basimyili", SqlDbType.NVarChar) { Value = txtBasimYili.Text });
+            parameters.Add(new SqlParameter("@dolapNo", SqlDbType.NVarChar) { Value = txtDolapNo.Text });
+            parameters.Add(new SqlParameter("@rafNo", SqlDbType.NVarChar) { Value = txtRafNo.Text });
             parameters.Add(new SqlParameter("@id", SqlDbType.Int) { Value = kitapId });
 
             IDataBase.executeNonQuery("update kitaplar set kitapAdi = @kitapAdi, yazarAdi = @yazarAdi, sayfaSayisi = @sayfaSayisi, tur = @tur, yayinevi = @yayinevi, basimYili = @basimYili, dolapNo = @dolapNo, rafNo = @rafNo where id = @id", parameters);

@@ -34,7 +34,7 @@ namespace Kutupoto
         {
             // Prepare SQL parameters to prevent SQL Injection
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@KullaniciAdi", SqlDbType.VarChar) { Value = txtKullanici.Text });
+            parameters.Add(new SqlParameter("@KullaniciAdi", SqlDbType.NVarChar) { Value = txtKullanici.Text });
 
             // Fetch the user by username; the salted hash is verified in code
             DataTable dt = IDataBase.DatatoDataTable("select id, Sifre from kullanicilar where KullaniciAdi = @KullaniciAdi", parameters);

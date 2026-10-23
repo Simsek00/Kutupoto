@@ -30,8 +30,8 @@ namespace Kutupoto
         void okuyucuEkle()
         {
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@adi", SqlDbType.VarChar) { Value = txtAd.Text });
-            parameters.Add(new SqlParameter("@soyadi", SqlDbType.VarChar) { Value = txtSoyad.Text });
+            parameters.Add(new SqlParameter("@adi", SqlDbType.NVarChar) { Value = txtAd.Text });
+            parameters.Add(new SqlParameter("@soyadi", SqlDbType.NVarChar) { Value = txtSoyad.Text });
 
             // Determine gender based on radio button selection
             string cinsiyet = "";
@@ -43,13 +43,13 @@ namespace Kutupoto
             {
                 cinsiyet = radioBtnKadin.Text;
             }
-            parameters.Add(new SqlParameter("@cinsiyeti", SqlDbType.VarChar) { Value = cinsiyet });
+            parameters.Add(new SqlParameter("@cinsiyeti", SqlDbType.NVarChar) { Value = cinsiyet });
 
             // Add other parameters
-            parameters.Add(new SqlParameter("@sinifi", SqlDbType.VarChar) { Value = txtSinif.Text });
-            parameters.Add(new SqlParameter("@OkulNo", SqlDbType.VarChar) { Value = txtOkulNo.Text });
-            parameters.Add(new SqlParameter("@cepTel", SqlDbType.VarChar) { Value = maskedCepTel.Text });
-            parameters.Add(new SqlParameter("@adres", SqlDbType.VarChar) { Value = txtAdres.Text });
+            parameters.Add(new SqlParameter("@sinifi", SqlDbType.NVarChar) { Value = txtSinif.Text });
+            parameters.Add(new SqlParameter("@OkulNo", SqlDbType.NVarChar) { Value = txtOkulNo.Text });
+            parameters.Add(new SqlParameter("@cepTel", SqlDbType.NVarChar) { Value = maskedCepTel.Text });
+            parameters.Add(new SqlParameter("@adres", SqlDbType.NVarChar) { Value = txtAdres.Text });
 
             // Execute INSERT query and retrieve the newly created ID using @@IDENTITY
             object value = IDataBase.executeScalar("insert into okuyucular (adi, soyadi, cinsiyeti, sinifi, okulNo, cepTel, adres) values (@adi, @soyadi, @cinsiyeti, @sinifi, @okulNo, @cepTel, @adres) select @@IDENTITY", parameters);
@@ -67,8 +67,8 @@ namespace Kutupoto
         void okuyucuGuncelle()
         {
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@adi", SqlDbType.VarChar) { Value = txtAd.Text });
-            parameters.Add(new SqlParameter("@soyadi", SqlDbType.VarChar) { Value = txtSoyad.Text });
+            parameters.Add(new SqlParameter("@adi", SqlDbType.NVarChar) { Value = txtAd.Text });
+            parameters.Add(new SqlParameter("@soyadi", SqlDbType.NVarChar) { Value = txtSoyad.Text });
             
             string cinsiyet = "";
             if (radiobtnErkek.Checked)
@@ -79,12 +79,12 @@ namespace Kutupoto
             {
                 cinsiyet = radioBtnKadin.Text;
             }
-            parameters.Add(new SqlParameter("@cinsiyeti", SqlDbType.VarChar) { Value = cinsiyet });
+            parameters.Add(new SqlParameter("@cinsiyeti", SqlDbType.NVarChar) { Value = cinsiyet });
             
-            parameters.Add(new SqlParameter("@sinifi", SqlDbType.VarChar) { Value = txtSinif.Text });
-            parameters.Add(new SqlParameter("@OkulNo", SqlDbType.VarChar) { Value = txtOkulNo.Text });
-            parameters.Add(new SqlParameter("@cepTel", SqlDbType.VarChar) { Value = maskedCepTel.Text });
-            parameters.Add(new SqlParameter("@adres", SqlDbType.VarChar) { Value = txtAdres.Text });
+            parameters.Add(new SqlParameter("@sinifi", SqlDbType.NVarChar) { Value = txtSinif.Text });
+            parameters.Add(new SqlParameter("@OkulNo", SqlDbType.NVarChar) { Value = txtOkulNo.Text });
+            parameters.Add(new SqlParameter("@cepTel", SqlDbType.NVarChar) { Value = maskedCepTel.Text });
+            parameters.Add(new SqlParameter("@adres", SqlDbType.NVarChar) { Value = txtAdres.Text });
             
             // The ID parameter is crucial for the WHERE clause in the UPDATE statement
             parameters.Add(new SqlParameter("@id", SqlDbType.Int) { Value = okuyucuId });
