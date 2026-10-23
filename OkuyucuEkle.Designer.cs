@@ -145,6 +145,7 @@
             txtAd.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             txtAd.Location = new Point(15, 48);
             txtAd.Name = "txtAd";
+            txtAd.MaxLength = 30;
             txtAd.Size = new Size(270, 25);
             txtAd.TabIndex = 1;
             // 
@@ -163,6 +164,7 @@
             txtSoyad.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             txtSoyad.Location = new Point(15, 98);
             txtSoyad.Name = "txtSoyad";
+            txtSoyad.MaxLength = 30;
             txtSoyad.Size = new Size(270, 25);
             txtSoyad.TabIndex = 3;
             // 
@@ -216,6 +218,7 @@
             txtSinif.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             txtSinif.Location = new Point(15, 178);
             txtSinif.Name = "txtSinif";
+            txtSinif.MaxLength = 10;
             txtSinif.Size = new Size(120, 25);
             txtSinif.TabIndex = 8;
             // 
@@ -234,6 +237,7 @@
             txtOkulNo.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             txtOkulNo.Location = new Point(165, 178);
             txtOkulNo.Name = "txtOkulNo";
+            txtOkulNo.MaxLength = 30;
             txtOkulNo.Size = new Size(120, 25);
             txtOkulNo.TabIndex = 10;
             // 
@@ -272,6 +276,7 @@
             txtAdres.Location = new Point(15, 278);
             txtAdres.Multiline = true;
             txtAdres.Name = "txtAdres";
+            txtAdres.MaxLength = 250;
             txtAdres.Size = new Size(270, 80);
             txtAdres.TabIndex = 14;
             // 

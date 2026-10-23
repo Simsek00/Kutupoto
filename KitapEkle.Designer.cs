@@ -207,6 +207,7 @@
             // 
             txtKitapAdi.Location = new Point(110, 74);
             txtKitapAdi.Name = "txtKitapAdi";
+            txtKitapAdi.MaxLength = 50;
             txtKitapAdi.Size = new Size(190, 23);
             txtKitapAdi.TabIndex = 3;
             // 
@@ -222,6 +223,7 @@
             // 
             txtYazar.Location = new Point(110, 114);
             txtYazar.Name = "txtYazar";
+            txtYazar.MaxLength = 50;
             txtYazar.Size = new Size(190, 23);
             txtYazar.TabIndex = 5;
             // 
@@ -237,6 +239,7 @@
             // 
             txtSayfa.Location = new Point(110, 154);
             txtSayfa.Name = "txtSayfa";
+            txtSayfa.MaxLength = 20;
             txtSayfa.Size = new Size(190, 23);
             txtSayfa.TabIndex = 7;
             // 
@@ -252,6 +255,7 @@
             // 
             txtTur.Location = new Point(110, 194);
             txtTur.Name = "txtTur";
+            txtTur.MaxLength = 20;
             txtTur.Size = new Size(190, 23);
             txtTur.TabIndex = 9;
             // 
@@ -267,6 +271,7 @@
             // 
             txtYayinevi.Location = new Point(110, 234);
             txtYayinevi.Name = "txtYayinevi";
+            txtYayinevi.MaxLength = 50;
             txtYayinevi.Size = new Size(190, 23);
             txtYayinevi.TabIndex = 11;
             // 
@@ -282,6 +287,7 @@
             // 
             txtBasimYili.Location = new Point(110, 274);
             txtBasimYili.Name = "txtBasimYili";
+            txtBasimYili.MaxLength = 20;
             txtBasimYili.Size = new Size(190, 23);
             txtBasimYili.TabIndex = 13;
             // 
@@ -297,6 +303,7 @@
             // 
             txtDolapNo.Location = new Point(110, 314);
             txtDolapNo.Name = "txtDolapNo";
+            txtDolapNo.MaxLength = 20;
             txtDolapNo.Size = new Size(190, 23);
             txtDolapNo.TabIndex = 15;
             // 
@@ -312,6 +319,7 @@
             // 
             txtRafNo.Location = new Point(110, 354);
             txtRafNo.Name = "txtRafNo";
+            txtRafNo.MaxLength = 20;
             txtRafNo.Size = new Size(190, 23);
             txtRafNo.TabIndex = 17;
             // 

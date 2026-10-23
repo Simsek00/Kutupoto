@@ -54,6 +54,7 @@
             txtAd.ForeColor = Color.FromArgb(44, 62, 80);
             txtAd.Location = new Point(50, 132);
             txtAd.Name = "txtAd";
+            txtAd.MaxLength = 20;
             txtAd.Size = new Size(300, 27);
             txtAd.TabIndex = 1;
             // 
@@ -65,6 +66,7 @@
             txtKullanici.ForeColor = Color.FromArgb(44, 62, 80);
             txtKullanici.Location = new Point(50, 262);
             txtKullanici.Name = "txtKullanici";
+            txtKullanici.MaxLength = 20;
             txtKullanici.Size = new Size(300, 27);
             txtKullanici.TabIndex = 3;
             // 
@@ -87,6 +89,7 @@
             txtSoyad.ForeColor = Color.FromArgb(44, 62, 80);
             txtSoyad.Location = new Point(50, 197);
             txtSoyad.Name = "txtSoyad";
+            txtSoyad.MaxLength = 20;
             txtSoyad.Size = new Size(300, 27);
             txtSoyad.TabIndex = 2;
             txtSoyad.TextChanged += textBox2_TextChanged;
@@ -110,6 +113,7 @@
             txtSifre.ForeColor = Color.FromArgb(44, 62, 80);
             txtSifre.Location = new Point(50, 327);
             txtSifre.Name = "txtSifre";
+            txtSifre.MaxLength = 64;
             txtSifre.PasswordChar = '●';
             txtSifre.Size = new Size(300, 27);
             txtSifre.TabIndex = 4;
